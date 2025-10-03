@@ -1,3 +1,6 @@
+//app/contants/aboutData.tsx
+
+
 export const challengeData = {
     statistic: '70%',
     description: "of Nigeria's rural population lacks access to basic healthcare",
