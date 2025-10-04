@@ -17,7 +17,7 @@ const VisionCard: React.FC = () => {
                 </div>
                 <ul className="text-sm text-foreground/80 space-y-1 list-disc pt-2 ">
                     <li>Zero preventable deaths in rural communities</li>
-                    <li> 100% vaccination coverage in target areas</li>
+                    <li>100% vaccination coverage in target areas</li>
                     <li>Community-owned healthcare initiatives.</li>
                     <li>Intergration with traditional healing practices</li>
                 </ul>

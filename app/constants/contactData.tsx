@@ -2,6 +2,22 @@
 
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 
+export const generalInfo = {
+    address1: `170 Ademola Adetokunbo Crescent Wuse 2, Abuja, Nigeria`,
+    address2: `14361 Earl Chokiski Ave El Paso TX 79938, USA`,
+    phone1: `+234 9030083129`,
+    phone2: `+1 9159992005`,
+    email: `obefoundation4charity@gmail.com`,
+    twitter: `https://twitter.com/obefoundation4c`,
+    linkedin: `https://www.linkedin.com/company/obe-foundation-4-charity`,
+    openDays: [
+        {day: 'Monday-Friday', time: '8:00 AM - 6:00 PM (WAT)'},
+        {day: 'Saturday', time: '9:00 AM - 4:00 PM'},
+        {day: 'Sunday', time: 'Closed'},
+    ],
+    charity: "Dr. Obe Charity Foundation",
+}
+
 export const contactInfo = [
     {
         icon: Mail,
@@ -9,8 +25,8 @@ export const contactInfo = [
         subtitle: 'Send us an email anytime',
         content: (
             <p className="text-foreground/80 select-text cursor-text">
-                <a href="mailto:obefoundation4charity@gmail.com" className="hover:underline">
-                    obefoundation4charity@gmail.com
+                <a href={`mailto:${generalInfo.email}`} className="hover:underline">
+                    {generalInfo.email}
                 </a>
             </p>
         ),
@@ -22,10 +38,10 @@ export const contactInfo = [
         content: (
             <>
                 <p className="text-foreground/80 select-text cursor-text">
-                    <a href="tel:+2349030083129" className="hover:underline">+234 9030083129</a>
+                    <a href={`tel:${generalInfo.phone1}`} className="hover:underline">{generalInfo.phone1}</a>
                 </p>
                 <p className="text-foreground/80 select-text cursor-text">
-                    <a href="tel:+19159992005" className="hover:underline">+1 9159992005</a>
+                    <a href={`tel:${generalInfo.phone1}`} className="hover:underline">{generalInfo.phone2}</a>
                 </p>
             </>
         ),
@@ -36,23 +52,15 @@ export const contactInfo = [
         subtitle: 'Our headquarters and training center',
         content: (
             <>
-                <address className="text-foreground/80 not-italic select-text cursor-text">
-                    Dr. Obe Charity Foundation
+                <address className="text-foreground/80 not-italic select-text cursor-text mb-3">
+                    {generalInfo.charity}
                     <br />
-                    170 Ademola Adetokunbo Crescent
-                    <br />
-                    Wuse 2, Abuja
-                    <br />
-                    Nigeria
+                    {generalInfo.address1}
                 </address>
                 <address className="text-foreground/80 not-italic select-text cursor-text">
-                    Dr. Obe Charity Foundation
+                    {generalInfo.charity}
                     <br />
-                    14361 Earl Chokiski Ave
-                    <br />
-                    El Paso, TX 79938
-                    <br />
-                    USA
+                    {generalInfo.address2}
                 </address>
             </>
         ),
@@ -63,9 +71,10 @@ export const contactInfo = [
         subtitle: 'When we’re available',
         content: (
             <div className="space-y-1 text-sm text-foreground/80">
-                <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
-                <p>Saturday: 9:00 AM - 4:00 PM</p>
-                <p>Sunday: Closed</p>
+                {generalInfo.openDays.map((day, index) => (
+                    <p key={index}>{day.day}: {day.time} </p>
+                ))}
+
             </div>
         ),
     },

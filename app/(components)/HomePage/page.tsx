@@ -4,13 +4,8 @@ import Link from 'next/link';
 import VisionCard from "@/app/subcomponents/HomeComponents/VisionCard";
 import MissionCard from "@/app/subcomponents/HomeComponents/MissionCard";
 import ServiceCard from "@/app/subcomponents/HomeComponents/ServiceCard";
-import HeroBackground from "@/app/subcomponents/HeroBackground";
+import {services} from "@/app/constants/homeData";
 
-const services = [
-    { id: 'serv1', icon: '🚑', title: 'Mobile Clinics', description: 'Emergency response units reaching remote communities' },
-    { id: 'serv2',  icon: '📚', title: 'Health Education', description: 'Community programs and vaccination drives' },
-    { id: 'serv3',  icon: '🤝', title: 'Partnerships', description: 'Collaboration with local leaders and government' },
-];
 
 const HomePage: React.FC = () => {
     return (

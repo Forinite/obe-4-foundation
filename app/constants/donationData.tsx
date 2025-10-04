@@ -31,7 +31,7 @@ export const donationMethods = [
         title: 'Nigerian Naira Account',
         subtitle: 'Local Bank Transfer',
         icon: Building2,
-        gradient: 'from-green-500 to-emerald-600',
+        gradient: 'from-green-500/15 to-emerald-600/15',
         details: [
             { label: 'Account Name', value: 'Dr. Obe Charity Foundation' },
             { label: 'Account Number', value: '1312584189' },
@@ -42,7 +42,7 @@ export const donationMethods = [
         title: 'USD Account',
         subtitle: 'Dollar Account',
         icon: DollarSign,
-        gradient: 'from-blue-500 to-cyan-600',
+        gradient: 'from-blue-500/15 to-cyan-600/15',
         details: [
             { label: 'Account Number', value: '9159992005' },
             { label: 'Bank Name', value: 'Bank of America' },
@@ -52,14 +52,14 @@ export const donationMethods = [
         title: 'PayPal',
         subtitle: 'International Transfer',
         icon: CreditCard,
-        gradient: 'from-purple-500 to-indigo-600',
+        gradient: 'from-purple-500/15 to-indigo-600/15',
         details: [{ label: 'Account', value: '@obecharity' }],
     },
     {
         title: 'CashApp',
         subtitle: 'Digital Donations',
         icon: () => <span className="text-lg font-bold">₿</span>, // Custom icon
-        gradient: 'from-orange-500 to-amber-600',
+        gradient: 'from-orange-500/15 to-amber-600/15',
         details: [{ label: 'Account', value: '@obecharityfoundation' }],
     },
 ];
@@ -69,6 +69,6 @@ export const importantNotes = [
     'All donations go directly to healthcare programs',
     'Monthly impact reports sent to all donors',
     'All transactions are secure and encrypted',
-    'Email us at obefoundation4charity@gmail.com after donation',
+    // 'Email us at obefoundation4charity@gmail.com after donation',
     'Receipts and confirmations provided for all contributions',
 ];

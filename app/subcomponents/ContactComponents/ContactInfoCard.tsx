@@ -21,7 +21,7 @@ const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
     return (
         <div
             className={cn(
-                'bg-background/50 backdrop-blur-sm border border-cyan-400/20 rounded-lg p-6 cursor-default select-none',
+                'bg-background/50 backdrop-blur-sm border border-cyan-400/20 rounded-lg p-6 cursor-default select-none text-sm',
                 className,
             )}
         >
@@ -30,7 +30,7 @@ const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
                     <Icon className="h-6 w-6 text-cyan-400" aria-hidden="true" />
                 </div>
                 <div>
-                    <h3 className="font-semibold">{title}</h3>
+                    <h3 className="font-semibold text-base">{title}</h3>
                     <p className="text-sm text-foreground/70">{subtitle}</p>
                 </div>
             </div>

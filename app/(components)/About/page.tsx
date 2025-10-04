@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { challengeData, objectives, approach } from '@/app/constants/aboutData';
 import SectionHeader from "@/app/subcomponents/AboutComponents/SectionHeader";
 import VisionCard from "@/app/subcomponents/HomeComponents/VisionCard";
-import MissionCard from "@/app/subcomponents/HomeComponents/MissionCard";
+import MissionCard from "@/app/subcomponents/AboutComponents/MissionCard";
 import Gallery from "@/app/subcomponents/AboutComponents/Gallery";
 import ChallengeCard from "@/app/subcomponents/AboutComponents/ChallengeCard";
 import ObjectiveCard from "@/app/subcomponents/AboutComponents/ObjectiveCard";

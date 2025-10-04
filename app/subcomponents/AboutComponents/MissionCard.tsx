@@ -1,4 +1,4 @@
-//app/subcomponents/HomeComponents/MissionCard.tsx
+//app/subcomponents/AboutComponents/MissionCard.tsx
 
 import HeroBackground from "@/app/subcomponents/HeroBackground";
 import {missionInfo, missionStatements} from "@/app/constants/homeData";
@@ -13,24 +13,13 @@ const MissionCard: React.FC = () => {
                 </h2>
                 <div className="text-foreground/80 " style={{opacity: 1, transform: 'none'}}>
                     {
-                        missionStatements.map((item, index ) => (
+                        missionStatements.slice(0,1).map((item, index ) => (
                             <p key={index} className="text-foreground/80 mb-4">
                                 {item}
                             </p>
                         ))
                     }
 
-
-                    <div className="text-3xl font-bold text-cyan-400">{missionInfo.percentage}</div>
-                    <p className="text-sm text-foreground/70 my-1">
-                        {missionInfo.text}
-                    </p>
-                    <ul className="space-y-2 text-sm text-foreground/70">
-                        {missionInfo.list.map((item, index) => (
-                            <li key={index}>•  {item}</li>
-                        ))}
-
-                    </ul>
                 </div>
             </div>
         </div>

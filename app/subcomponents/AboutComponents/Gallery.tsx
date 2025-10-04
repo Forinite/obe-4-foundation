@@ -53,8 +53,8 @@ const Gallery: React.FC = () => {
                                         '--color-dark': 'rgba(255, 255, 255, 0.2)',
                                     } as React.CSSProperties}
                                 />
-                                {galleryImages.slice(0, 8).map((image) => (
-                                    <div key={image.alt} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
+                                {galleryImages.slice(0, 8).map((image, index) => (
+                                    <div key={index} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
                                         <div
                                             className="absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))] bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -top-2 sm:-top-4"
                                             style={{
@@ -69,7 +69,7 @@ const Gallery: React.FC = () => {
                                         />
                                         <Image
                                             src={image.src}
-                                            alt={image.alt}
+                                            alt={index}
                                             width={970}
                                             height={700}
                                             className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl cursor-pointer hover:ring-cyan-400/50 transition-all duration-300 w-full"
@@ -96,8 +96,8 @@ const Gallery: React.FC = () => {
                                         '--color-dark': 'rgba(255, 255, 255, 0.2)',
                                     } as React.CSSProperties}
                                 />
-                                {galleryImages.slice(8, 16).map((image) => (
-                                    <div key={image.alt} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
+                                {galleryImages.slice(8, 16).map((image, index) => (
+                                    <div key={index} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
                                         <div
                                             className="absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))] bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -top-2 sm:-top-4"
                                             style={{
@@ -112,7 +112,7 @@ const Gallery: React.FC = () => {
                                         />
                                         <Image
                                             src={image.src}
-                                            alt={image.alt}
+                                            alt={index}
                                             width={970}
                                             height={700}
                                             className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl cursor-pointer hover:ring-cyan-400/50 transition-all duration-300 w-full"
@@ -139,8 +139,8 @@ const Gallery: React.FC = () => {
                                         '--color-dark': 'rgba(255, 255, 255, 0.2)',
                                     } as React.CSSProperties}
                                 />
-                                {galleryImages.slice(16, 24).map((image) => (
-                                    <div key={image.alt} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
+                                {galleryImages.slice(16, 24).map((image, index) => (
+                                    <div key={index} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
                                         <div
                                             className="absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))] bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -top-2 sm:-top-4"
                                             style={{
@@ -155,7 +155,7 @@ const Gallery: React.FC = () => {
                                         />
                                         <Image
                                             src={image.src}
-                                            alt={image.alt}
+                                            alt={index}
                                             width={970}
                                             height={700}
                                             className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl cursor-pointer hover:ring-cyan-400/50 transition-all duration-300 w-full"
@@ -182,8 +182,8 @@ const Gallery: React.FC = () => {
                                         '--color-dark': 'rgba(255, 255, 255, 0.2)',
                                     } as React.CSSProperties}
                                 />
-                                {galleryImages.slice(24, 32).map((image) => (
-                                    <div key={image.alt} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
+                                {galleryImages.slice(24, 32).map((image, index) => (
+                                    <div key={index} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
                                         <div
                                             className="absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))] bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -top-2 sm:-top-4"
                                             style={{
@@ -198,7 +198,7 @@ const Gallery: React.FC = () => {
                                         />
                                         <Image
                                             src={image.src}
-                                            alt={image.alt}
+                                            alt={index}
                                             width={970}
                                             height={700}
                                             className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl cursor-pointer hover:ring-cyan-400/50 transition-all duration-300 w-full"
