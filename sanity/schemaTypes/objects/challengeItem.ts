@@ -7,13 +7,13 @@ export default defineType({
     title: 'Challenge Item',
     type: 'object',
     fields: [
-        // defineField({
-        //     name: 'icon',
-        //     title: 'Icon',
-        //     type: 'string',
-        //     validation: (Rule) => Rule.required(),
-        //     description: 'Enter an emoji (e.g., 🏥) or icon identifier (e.g., Heart)',
-        // }),
+        defineField({
+            name: 'icon',
+            title: 'Icon',
+            type: 'string',
+            description: 'Enter an emoji (e.g., 🏥) or icon identifier (e.g., Heart)',
+            // Removed validation: (Rule) => Rule.required()
+        }),
         defineField({
             name: 'text',
             title: 'Text',
@@ -24,7 +24,7 @@ export default defineType({
     preview: {
         select: {
             title: 'text',
-            media: 'icon',
+            // media: 'icon',
         },
     },
 });

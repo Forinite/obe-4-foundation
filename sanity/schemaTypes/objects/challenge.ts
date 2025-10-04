@@ -24,7 +24,7 @@ export default defineType({
     preview: {
         select: {
             title: 'text',
-            media: 'icon',
+            // media: 'icon',
         },
     },
 });

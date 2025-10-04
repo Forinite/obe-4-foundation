@@ -11,8 +11,8 @@ export default defineType({
             name: 'icon',
             title: 'Icon',
             type: 'string',
-            validation: (Rule) => Rule.required(),
             description: 'Enter an emoji (e.g., 🚑) or icon identifier (e.g., Heart)',
+            // Removed validation: (Rule) => Rule.required()
         }),
         defineField({
             name: 'title',
@@ -31,7 +31,7 @@ export default defineType({
         select: {
             title: 'title',
             subtitle: 'description',
-            media: 'icon',
+            // media: 'icon',
         },
     },
 });
