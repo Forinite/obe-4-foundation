@@ -1,8 +1,10 @@
 // app/(components)/about/page.tsx
 
+
+
 import { ReactNode } from 'react';
 import { Metadata } from 'next';
-import AdminNavbar from "@/app/(components)/adminComponents/AdminNavbar";
+import AdminNavbar from '@/app/(components)/adminComponents/AdminNavbar';
 
 export const metadata: Metadata = {
     title: 'Admin | Dr. Obe Charity Foundation',
@@ -10,7 +12,7 @@ export const metadata: Metadata = {
     keywords: ['admin', 'charity', 'mission', 'Dr. Obe Foundation'],
     openGraph: {
         title: 'Admin | Dr. Obe Charity Foundation',
-        description: 'Administrator control and management .',
+        description: 'Administrator control and management.',
         url: 'https://www.drobe-foundation.org/admin/dashboard',
         type: 'website',
         images: [
@@ -27,12 +29,13 @@ export const metadata: Metadata = {
     },
 };
 
-export default async function AboutLayout({ children }: { children: ReactNode }) {
+export default function AdminLayout({ children }: { children: ReactNode }) {
     return (
-
         <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
-            <AdminNavbar/>
-            <main className={'ml-64'}> {children}</main>
+            <AdminNavbar />
+            <main className="flex-1 lg:ml-64 transition-all duration-300 ease-in-out pt-16 lg:pt-0 p-6">
+                {children}
+            </main>
         </div>
     );
 }
