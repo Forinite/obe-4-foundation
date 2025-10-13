@@ -1,6 +1,7 @@
 
 import Donations from '@/app/subcomponents/DonationComponents/Donations';
 import { Metadata } from 'next';
+import Footer from "@/app/subcomponents/Footer";
 
 export const metadata: Metadata = {
     title: 'Donate | Dr. Obe Charity Foundation',
@@ -16,5 +17,10 @@ export const metadata: Metadata = {
 };
 
 export default function DonationsPage() {
-    return <Donations />;
+    return (
+        <>
+            <Donations />
+            <Footer />
+        </>
+    );
 }

@@ -4,11 +4,12 @@ import { createClient } from 'next-sanity';
 import { HomeData, AboutData, ContactData, GalleryImage, FooterData } from '@/app/types';
 
 export const client = createClient({
-    projectId: 'your_project_id',
-    dataset: 'production',
-    apiVersion: '2023-05-03',
-    useCdn: true,
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    apiVersion: '2025-02-19',
+    useCdn: false, // Use false for admin dashboard to ensure fresh data
 });
+
 
 export async function getHomeData(): Promise<HomeData> {
     return client.fetch(`

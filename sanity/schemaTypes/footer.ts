@@ -7,14 +7,14 @@ export default defineType({
     title: 'Footer',
     type: 'document',
     fields: [
-        defineField({
-            name: 'quickLinks',
-            title: 'Quick Links',
-            type: 'array',
-            of: [{ type: 'link' }],
-            validation: (Rule) => Rule.required().min(1),
-            description: 'Links to main pages (e.g., Home, About, Contact)',
-        }),
+        // defineField({
+        //     name: 'quickLinks',
+        //     title: 'Quick Links',
+        //     type: 'array',
+        //     of: [{ type: 'link' }],
+        //     validation: (Rule) => Rule.required().min(1),
+        //     description: 'Links to main pages (e.g., Home, About, Contact)',
+        // }),
         defineField({
             name: 'programLinks',
             title: 'Program Links',
@@ -26,7 +26,7 @@ export default defineType({
     ],
     preview: {
         select: {
-            title: 'quickLinks.0.label',
+            title: 'programLinks.0.label',
         },
     },
 });

@@ -1,6 +1,5 @@
 // app/types/index.ts
 
-// Reusable object types
 export interface Link {
     href: string;
     label: string;
@@ -12,31 +11,30 @@ export interface OpenDay {
 }
 
 export interface Service {
-    icon: string; // Emoji or icon identifier (e.g., '🚑', 'Heart')
+    icon: string;
     title: string;
     description: string;
 }
 
 export interface Objective {
-    icon: string; // Emoji or icon identifier
+    icon: string;
     title: string;
     items: string[];
 }
 
 export interface Approach {
-    icon: string; // Emoji or icon identifier
+    icon: string;
     title: string;
     description: string;
 }
 
 export interface ChallengeItem {
-    icon: string; // Emoji or icon identifier
+    icon: string;
     text: string;
 }
 
-// Document types
 export interface HomeData {
-    _id: string; // Sanity document ID
+    _id: string;
     _type: 'home';
     missionStatements: string[];
     missionInfo: {
@@ -89,14 +87,11 @@ export interface GalleryImage {
             _ref: string;
             _type: 'reference';
         };
-    }; // Sanity image object
-    alt: string;
-    caption?: string;
+    };
 }
 
 export interface FooterData {
     _id: string;
     _type: 'footer';
-    quickLinks: Link[];
     programLinks: Link[];
 }

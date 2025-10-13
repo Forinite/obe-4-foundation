@@ -9,6 +9,7 @@ interface FAQCardProps {
 }
 
 const FAQCard: React.FC<FAQCardProps> = ({ question, answer, className }) => {
+    console.log(answer)
     return (
         <div
             className={cn(
