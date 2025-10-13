@@ -1,6 +1,9 @@
 // app/adminComponents/Home/MissionInfoCard.tsx
+'use client';
 
-import { Trash2, Edit } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Trash2, Edit3, ChevronRight, Target } from 'lucide-react';
 
 interface MissionInfoCardProps {
     data: {
@@ -11,26 +14,112 @@ interface MissionInfoCardProps {
 }
 
 export default function MissionInfoCard({ data }: MissionInfoCardProps) {
+    const handleEdit = () => console.log('Edit mission info');
+    const handleDelete = () => console.log('Delete mission info');
+
+    // Circle configuration
+    const radius = 30;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (data.percentage / 100) * circumference;
+
     return (
-        <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between mb-2">
-                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                    {data.percentage}% - {data.text}
-                </h4>
-                <div className="flex gap-2">
-                    <button className="text-gray-500 hover:text-cyan-600 dark:hover:text-cyan-400">
-                        <Edit className="w-5 h-5" />
+        <motion.div
+            whileHover={{ y: -3 }}
+            transition={{ duration: 0.25 }}
+            className="group relative p-6 rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border border-gray-200/40 dark:border-gray-700/40 shadow-md hover:shadow-cyan-500/10 transition-all duration-300"
+        >
+            {/* Header Section */}
+            <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-5">
+                    {/* Circular Percentage Display */}
+                    <div className="relative flex items-center justify-center w-20 h-20">
+                        <svg className="w-20 h-20 transform -rotate-90">
+                            <circle
+                                cx="40"
+                                cy="40"
+                                r={radius}
+                                stroke="currentColor"
+                                className="text-gray-200 dark:text-gray-700"
+                                strokeWidth="6"
+                                fill="transparent"
+                            />
+                            <circle
+                                cx="40"
+                                cy="40"
+                                r={radius}
+                                stroke="url(#progressGradient)"
+                                strokeWidth="6"
+                                fill="transparent"
+                                strokeDasharray={circumference}
+                                strokeDashoffset={offset}
+                                strokeLinecap="round"
+                                className="transition-all duration-700"
+                            />
+                            <defs>
+                                <linearGradient id="progressGradient" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stopColor="#06b6d4" />
+                                    <stop offset="100%" stopColor="#6366f1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+
+                        <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                {data.percentage}%
+              </span>
+                        </div>
+                    </div>
+
+                    {/* Title Text */}
+                    <div>
+                        <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-100 tracking-wide">
+                            {data.text}
+                        </h4>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                            Mission Objective Overview
+                        </p>
+                    </div>
+                </div>
+
+                {/* Edit/Delete Buttons */}
+                <div className="flex items-center gap-3 opacity-80 group-hover:opacity-100 transition-opacity">
+                    <button
+                        onClick={handleEdit}
+                        className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-cyan-600/20 text-cyan-500 hover:text-cyan-300 transition-colors"
+                        aria-label="Edit mission info"
+                    >
+                        <Edit3 className="w-5 h-5" />
                     </button>
-                    <button className="text-gray-500 hover:text-red-600 dark:hover:text-red-400">
+                    <button
+                        onClick={handleDelete}
+                        className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-red-600/20 text-red-500 hover:text-red-300 transition-colors"
+                        aria-label="Delete mission info"
+                    >
                         <Trash2 className="w-5 h-5" />
                     </button>
                 </div>
             </div>
-            <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300">
+
+            {/* List Section */}
+            <ul className="space-y-2 mt-4">
                 {data.list.map((item, index) => (
-                    <li key={index}>{item}</li>
+                    <li
+                        key={index}
+                        className="flex items-center justify-between bg-gray-100/70 dark:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-700/40 rounded-lg px-4 py-2 transition-all duration-200"
+                    >
+                        <div className="flex items-center gap-3 text-gray-700 dark:text-gray-200">
+              <span className="text-cyan-500">
+                <Target className="w-4 h-4" />
+              </span>
+                            <span className="text-sm font-medium">{item}</span>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-cyan-400 transition-colors" />
+                    </li>
                 ))}
             </ul>
-        </div>
+
+            {/* Subtle Glow Border */}
+            <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-cyan-500/20 pointer-events-none transition-all duration-300" />
+        </motion.div>
     );
 }

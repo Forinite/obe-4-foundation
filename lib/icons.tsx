@@ -9,7 +9,7 @@ import {
     Shield,
     DollarSignIcon,
     LandPlotIcon,
-    PersonStandingIcon, BookA
+    PersonStandingIcon, BookA, BookX
 } from 'lucide-react';
 import React, { JSX } from 'react';
 import {DocumentIcon} from "@heroicons/react/24/solid";
@@ -27,6 +27,7 @@ export const iconMap: Record<string, React.ComponentType<{ className?: string }>
     'Document': DocumentIcon,
     'Doctor': PersonStandingIcon,
     'Books': BookA,
+    'Book': BookX,
     '🏥': () => <span aria-hidden="true">🏥</span>,
 };
 
