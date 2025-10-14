@@ -4,21 +4,20 @@
 import Image from 'next/image';
 import { galleryImages } from '@/app/constants/galleryImages';
 
-// Define CSS for animations
 const styles = `
-  @keyframes slideUp {
-    0% { transform: translateY(19.1922px); }
+  @keyframes gentleFloatUp {
+    0% { transform: translateY(15px); }
     50% { transform: translateY(-20px); }
-    100% { transform: translateY(19.1922px); }
+    100% { transform: translateY(15px); }
   }
-  @keyframes slideDown {
-    0% { transform: translateY(-77.2146px); }
-    50% { transform: translateY(-37.2146px); }
-    100% { transform: translateY(-77.2146px); }
+  @keyframes gentleFloatDown {
+    0% { transform: translateY(-15px); }
+    50% { transform: translateY(20px); }
+    100% { transform: translateY(-15px); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .animate-[slideUp_20s_ease-in-out_infinite],
-    .animate-[slideDown_20s_ease-in-out_infinite] {
+    .animate-[gentleFloatUp_25s_ease-in-out_infinite],
+    .animate-[gentleFloatDown_25s_ease-in-out_infinite] {
       animation: none;
     }
   }
@@ -26,193 +25,63 @@ const styles = `
 
 const Gallery: React.FC = () => {
     return (
-        <div className="relative z-10 mb-16">
+        <section className="relative py-20 px-6 sm:px-8 md:px-10 overflow-hidden">
             <style>{styles}</style>
-            <h2 className="text-3xl font-semibold mb-8 text-center">Our Impact Gallery</h2>
-            <div className="mx-auto block h-[500px] sm:h-[600px] md:h-[700px] overflow-hidden rounded-2xl">
+
+            <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-purple-50 to-sky-50 opacity-60 -z-10" />
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(255,200,255,0.3),transparent_70%),radial-gradient(circle_at_80%_80%,rgba(150,220,255,0.3),transparent_70%)] -z-10" />
+
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-pink-500 via-purple-500 to-sky-500 bg-clip-text text-transparent">
+                Our Impact Gallery
+            </h2>
+
+            <div className="mx-auto block h-[550px] sm:h-[650px] md:h-[720px] overflow-hidden rounded-3xl">
                 <div className="flex size-full items-center justify-center">
-                    <div className="w-[90vw] max-w-[1200px] scale-[0.65] sm:scale-[0.8] md:scale-[0.9] lg:scale-100">
+                    <div className="w-[92vw] max-w-[1250px] scale-[0.75] sm:scale-[0.85] md:scale-100 transition-all">
                         <div
-                            className="relative top-[200px] sm:top-[300px] md:top-[350px] right-[50%] grid size-full origin-top-left grid-cols-4 gap-4 sm:gap-6 md:gap-8"
-                            style={{ transform: 'rotateX(45deg) rotateY(0deg) rotateZ(-45deg)' }}
+                            className="relative top-[250px] right-[50%] grid size-full origin-top-left grid-cols-4 gap-6 sm:gap-8"
+                            style={{ transform: 'rotateX(45deg) rotateZ(-45deg)' }}
                         >
-                            {/* Column 1: Slide Up */}
-                            <div
-                                className="flex flex-col items-start gap-4 sm:gap-6 md:gap-8 animate-[slideUp_20s_ease-in-out_infinite]"
-                                style={{ transform: 'translateY(19.1922px)' }}
-                            >
-                                <div
-                                    className="absolute top-[calc(var(--offset)/2*-1)] h-[calc(100%+var(--offset))] w-[var(--width)] bg-[linear-gradient(to_bottom,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_top,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_bottom,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_bottom,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -left-2 sm:-left-4"
-                                    style={{
-                                        '--background': '#ffffff',
-                                        '--color': 'rgba(0, 0, 0, 0.2)',
-                                        '--height': '5px',
-                                        '--width': '1px',
-                                        '--fade-stop': '90%',
-                                        '--offset': '80px',
-                                        '--color-dark': 'rgba(255, 255, 255, 0.2)',
-                                    } as React.CSSProperties}
-                                />
-                                {galleryImages.slice(0, 8).map((image, index) => (
-                                    <div key={index} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
-                                        <div
-                                            className="absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))] bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -top-2 sm:-top-4"
-                                            style={{
-                                                '--background': '#ffffff',
-                                                '--color': 'rgba(0, 0, 0, 0.2)',
-                                                '--height': '1px',
-                                                '--width': '5px',
-                                                '--fade-stop': '90%',
-                                                '--offset': '20px',
-                                                '--color-dark': 'rgba(255, 255, 255, 0.2)',
-                                            } as React.CSSProperties}
-                                        />
-                                        <Image
-                                            src={image.src}
-                                            alt={index}
-                                            width={970}
-                                            height={700}
-                                            className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl cursor-pointer hover:ring-cyan-400/50 transition-all duration-300 w-full"
-                                            loading="lazy"
-                                            tabIndex={0}
-                                        />
+                            {[0, 1, 2, 3].map((col) => {
+                                const start = col * 8;
+                                const end = start + 8;
+                                const isEven = col % 2 === 0;
+                                return (
+                                    <div
+                                        key={col}
+                                        className={`flex flex-col gap-6 sm:gap-8 ${
+                                            isEven
+                                                ? 'animate-[gentleFloatUp_25s_ease-in-out_infinite]'
+                                                : 'animate-[gentleFloatDown_25s_ease-in-out_infinite]'
+                                        }`}
+                                    >
+                                        {galleryImages.slice(start, end).map((image, index) => (
+                                            <div
+                                                key={index}
+                                                className="relative w-[150px] sm:w-[200px] md:w-[260px] group perspective"
+                                            >
+                                                <div className="transition-transform duration-500 group-hover:rotate-[-3deg] group-hover:scale-[1.05]">
+                                                    <Image
+                                                        src={image.src}
+                                                        alt={`gallery image ${index + 1}`}
+                                                        width={970}
+                                                        height={700}
+                                                        className="aspect-[970/700] rounded-xl object-cover shadow-lg ring-1 ring-gray-200 hover:ring-pink-300/50 transition-all duration-500"
+                                                        loading="lazy"
+                                                    />
+                                                    {/* soft overlay glow */}
+                                                    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-pink-100/40 via-transparent to-sky-100/30" />
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                            {/* Column 2: Slide Down */}
-                            <div
-                                className="flex flex-col items-start gap-4 sm:gap-6 md:gap-8 animate-[slideDown_20s_ease-in-out_infinite]"
-                                style={{ transform: 'translateY(-77.2146px)' }}
-                            >
-                                <div
-                                    className="absolute top-[calc(var(--offset)/2*-1)] h-[calc(100%+var(--offset))] w-[var(--width)] bg-[linear-gradient(to_bottom,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_top,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_bottom,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_bottom,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -left-2 sm:-left-4"
-                                    style={{
-                                        '--background': '#ffffff',
-                                        '--color': 'rgba(0, 0, 0, 0.2)',
-                                        '--height': '5px',
-                                        '--width': '1px',
-                                        '--fade-stop': '90%',
-                                        '--offset': '80px',
-                                        '--color-dark': 'rgba(255, 255, 255, 0.2)',
-                                    } as React.CSSProperties}
-                                />
-                                {galleryImages.slice(8, 16).map((image, index) => (
-                                    <div key={index} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
-                                        <div
-                                            className="absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))] bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -top-2 sm:-top-4"
-                                            style={{
-                                                '--background': '#ffffff',
-                                                '--color': 'rgba(0, 0, 0, 0.2)',
-                                                '--height': '1px',
-                                                '--width': '5px',
-                                                '--fade-stop': '90%',
-                                                '--offset': '20px',
-                                                '--color-dark': 'rgba(255, 255, 255, 0.2)',
-                                            } as React.CSSProperties}
-                                        />
-                                        <Image
-                                            src={image.src}
-                                            alt={index}
-                                            width={970}
-                                            height={700}
-                                            className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl cursor-pointer hover:ring-cyan-400/50 transition-all duration-300 w-full"
-                                            loading="lazy"
-                                            tabIndex={0}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                            {/* Column 3: Slide Up */}
-                            <div
-                                className="flex flex-col items-start gap-4 sm:gap-6 md:gap-8 animate-[slideUp_20s_ease-in-out_infinite]"
-                                style={{ transform: 'translateY(19.1922px)' }}
-                            >
-                                <div
-                                    className="absolute top-[calc(var(--offset)/2*-1)] h-[calc(100%+var(--offset))] w-[var(--width)] bg-[linear-gradient(to_bottom,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_top,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_bottom,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_bottom,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -left-2 sm:-left-4"
-                                    style={{
-                                        '--background': '#ffffff',
-                                        '--color': 'rgba(0, 0, 0, 0.2)',
-                                        '--height': '5px',
-                                        '--width': '1px',
-                                        '--fade-stop': '90%',
-                                        '--offset': '80px',
-                                        '--color-dark': 'rgba(255, 255, 255, 0.2)',
-                                    } as React.CSSProperties}
-                                />
-                                {galleryImages.slice(16, 24).map((image, index) => (
-                                    <div key={index} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
-                                        <div
-                                            className="absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))] bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -top-2 sm:-top-4"
-                                            style={{
-                                                '--background': '#ffffff',
-                                                '--color': 'rgba(0, 0, 0, 0.2)',
-                                                '--height': '1px',
-                                                '--width': '5px',
-                                                '--fade-stop': '90%',
-                                                '--offset': '20px',
-                                                '--color-dark': 'rgba(255, 255, 255, 0.2)',
-                                            } as React.CSSProperties}
-                                        />
-                                        <Image
-                                            src={image.src}
-                                            alt={index}
-                                            width={970}
-                                            height={700}
-                                            className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl cursor-pointer hover:ring-cyan-400/50 transition-all duration-300 w-full"
-                                            loading="lazy"
-                                            tabIndex={0}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                            {/* Column 4: Slide Down */}
-                            <div
-                                className="flex flex-col items-start gap-4 sm:gap-6 md:gap-8 animate-[slideDown_20s_ease-in-out_infinite]"
-                                style={{ transform: 'translateY(-77.2146px)' }}
-                            >
-                                <div
-                                    className="absolute top-[calc(var(--offset)/2*-1)] h-[calc(100%+var(--offset))] w-[var(--width)] bg-[linear-gradient(to_bottom,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_top,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_bottom,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_bottom,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -left-2 sm:-left-4"
-                                    style={{
-                                        '--background': '#ffffff',
-                                        '--color': 'rgba(0, 0, 0, 0.2)',
-                                        '--height': '5px',
-                                        '--width': '1px',
-                                        '--fade-stop': '90%',
-                                        '--offset': '80px',
-                                        '--color-dark': 'rgba(255, 255, 255, 0.2)',
-                                    } as React.CSSProperties}
-                                />
-                                {galleryImages.slice(24, 32).map((image, index) => (
-                                    <div key={index} className="relative w-[150px] sm:w-[200px] md:w-[250px]">
-                                        <div
-                                            className="absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))] bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)] [background-size:var(--width)_var(--height)] [mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)] [mask-composite:exclude] z-30 dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)] -top-2 sm:-top-4"
-                                            style={{
-                                                '--background': '#ffffff',
-                                                '--color': 'rgba(0, 0, 0, 0.2)',
-                                                '--height': '1px',
-                                                '--width': '5px',
-                                                '--fade-stop': '90%',
-                                                '--offset': '20px',
-                                                '--color-dark': 'rgba(255, 255, 255, 0.2)',
-                                            } as React.CSSProperties}
-                                        />
-                                        <Image
-                                            src={image.src}
-                                            alt={index}
-                                            width={970}
-                                            height={700}
-                                            className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl cursor-pointer hover:ring-cyan-400/50 transition-all duration-300 w-full"
-                                            loading="lazy"
-                                            tabIndex={0}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

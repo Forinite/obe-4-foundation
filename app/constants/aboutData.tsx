@@ -2,7 +2,7 @@
 
 
 export const challengeData = {
-    statistic: '70%',
+    statistic: 70,
     description: "of Nigeria's rural population lacks access to basic healthcare",
     subDescription:
         'Leading to preventable deaths from malaria, maternal complications, malnutrition, and infectious diseases.',
