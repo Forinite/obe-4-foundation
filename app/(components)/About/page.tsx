@@ -1,3 +1,5 @@
+//app/(components)/About/page.tsx
+
 import { Metadata } from 'next';
 
 import { challengeData, objectives, approach } from '@/app/constants/aboutData';

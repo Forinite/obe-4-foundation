@@ -30,12 +30,10 @@ export const metadata: Metadata = {
 
 export default async function ContactLayout({ children }: { children: ReactNode }) {
     return (
-        <html lang="en">
-        <body className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
-        </body>
-        </html>
+        <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+        </div>
     );
 }
