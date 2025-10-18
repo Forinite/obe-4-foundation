@@ -1,13 +1,21 @@
 // app/lib/sanity.ts
 
 import { createClient } from 'next-sanity';
-import { HomeData, AboutData, ContactData, GalleryImage, FooterData } from '@/app/types';
+import {HomeData, AboutData, ContactData, GalleryImage, FooterData, Service} from '@/app/types';
+//
+// export const client = createClient({
+//     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ,
+//     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+//     apiVersion: '2025-02-19',
+//     useCdn: false, // Use false for admin dashboard to ensure fresh data
+// });
 
 export const client = createClient({
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
     apiVersion: '2025-02-19',
-    useCdn: false, // Use false for admin dashboard to ensure fresh data
+    useCdn: false,
+    token: process.env.SANITY_API_TOKEN!,  // ← ADD ! to force token
 });
 
 
@@ -66,3 +74,7 @@ export async function getFooterData(): Promise<FooterData> {
     }
   `);
 }
+
+// Add to your existing sanity.ts file
+
+// import { client } from './sanity'; // Your existing client

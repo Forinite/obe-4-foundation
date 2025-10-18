@@ -10,13 +10,12 @@ import { motion } from 'framer-motion';
 interface ObjectiveCardProps {
     objective: Objective;
     index: number;
+    onEdit: () => void;  // 🔥 CALLBACK
+    onDelete: () => void;  // 🔥 CALLBACK
+    onRefetch: () => void;
 }
 
-export default function ObjectiveCard({ objective, index }: ObjectiveCardProps) {
-    // Placeholder functions
-    const handleEdit = () => console.log(`Edit objective ${objective.title}`);
-    const handleDelete = () => console.log(`Delete objective ${objective.title}`);
-
+export default function ObjectiveCard({ objective, index, onEdit, onDelete, onRefetch }: ObjectiveCardProps) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -25,7 +24,6 @@ export default function ObjectiveCard({ objective, index }: ObjectiveCardProps) 
             whileHover={{ y: -4, scale: 1.02 }}
             className="group relative overflow-hidden rounded-2xl bg-white/70 dark:bg-neutral-900/70 backdrop-blur-xl border border-neutral-200/60 dark:border-neutral-800/60 shadow-[0_4px_18px_-6px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_28px_-6px_rgba(0,0,0,0.15)] transition-all duration-300 p-6"
         >
-            {/* Decorative background accent */}
             <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-400/5 via-cyan-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
             <div className="flex items-start justify-between mb-4 relative z-10">
@@ -39,14 +37,14 @@ export default function ObjectiveCard({ objective, index }: ObjectiveCardProps) 
                 </div>
                 <div className="flex gap-3 text-neutral-500 dark:text-neutral-400">
                     <button
-                        onClick={handleEdit}
+                        onClick={onEdit}  // 🔥 CALLBACK
                         aria-label={`Edit objective ${objective.title}`}
                         className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors duration-200"
                     >
                         <PencilLine className="w-5 h-5" />
                     </button>
                     <button
-                        onClick={handleDelete}
+                        onClick={onDelete}  // 🔥 CALLBACK
                         aria-label={`Delete objective ${objective.title}`}
                         className="hover:text-red-500 dark:hover:text-red-400 transition-colors duration-200"
                     >

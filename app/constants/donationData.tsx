@@ -69,6 +69,6 @@ export const importantNotes = [
     'All donations go directly to healthcare programs',
     'Monthly impact reports sent to all donors',
     'All transactions are secure and encrypted',
-    // 'Email us at obefoundation4charity@gmail.com after donation',
+    'Email us at obefoundation4charity@gmail.com after donation',
     'Receipts and confirmations provided for all contributions',
 ];
