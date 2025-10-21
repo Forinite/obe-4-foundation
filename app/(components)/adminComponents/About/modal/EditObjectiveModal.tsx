@@ -3,17 +3,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { updateObjective } from '@/app/actions/about';
+import { Edit, Plus, Trash2 } from 'lucide-react';
 import Modal from '@/app/admin/components/Modal';
-import { Edit } from 'lucide-react';
-import { renderIconOptions } from '@/lib/icons';
+import IconPickerModal from '@/app/admin/components/IconPickerModal';
+import { updateObjective } from '@/app/actions/about';
 
 export default function EditObjectiveModal({
                                                isOpen,
                                                onClose,
                                                index,
                                                initialObjective,
-                                               onSuccess
+                                               onSuccess,
                                            }: {
     isOpen: boolean;
     onClose: () => void;
@@ -22,25 +22,29 @@ export default function EditObjectiveModal({
     onSuccess: () => void;
 }) {
     const [formData, setFormData] = useState({
-        icon: '',
+        icon: 'target',
         title: '',
-        items: ['', '', '']
+        items: [''],
     });
     const [loading, setLoading] = useState(false);
 
-    // 🔥 FIX: SYNC WITH INITIAL DATA!
     useEffect(() => {
         if (isOpen && initialObjective) {
             setFormData({
                 icon: initialObjective.icon || 'target',
                 title: initialObjective.title || '',
-                items: initialObjective.items?.length >= 3
-                    ? initialObjective.items
-                    : ['', '', '']
+                items: initialObjective.items?.length ? initialObjective.items : [''],
             });
-            console.log('🔥 OBJECTIVE SET:', initialObjective);
         }
     }, [isOpen, initialObjective]);
+
+    const handleAddItem = () =>
+        setFormData((prev) => ({ ...prev, items: [...prev.items, ''] }));
+    const handleRemoveItem = (index: number) =>
+        setFormData((prev) => ({
+            ...prev,
+            items: prev.items.filter((_, i) => i !== index),
+        }));
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,7 +55,7 @@ export default function EditObjectiveModal({
             await updateObjective(index, {
                 icon: formData.icon,
                 title: formData.title.trim(),
-                items: formData.items.filter(item => item.trim())
+                items: formData.items.filter((item) => item.trim()),
             });
             onSuccess();
             onClose();
@@ -64,54 +68,74 @@ export default function EditObjectiveModal({
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} title="Edit Objective">
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label className="block text-sm font-medium mb-2">Icon</label>
-                    <select
-                        value={formData.icon}
-                        onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-500"
-                        disabled={loading}
-                    >
-                        {renderIconOptions()}
-                    </select>
-                </div>
+            <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Icon Picker */}
+                <IconPickerModal
+                    selected={formData.icon}
+                    onSelect={(icon) => setFormData({ ...formData, icon })}
+                    label="Select Icon"
+                    color={'cyan'}
+                />
 
+                {/* Title */}
                 <div>
-                    <label className="block text-sm font-medium mb-2">Title</label>
+                    <label className="block text-sm font-medium mb-1">Title</label>
                     <input
                         type="text"
                         value={formData.title}
-                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-500"
+                        onChange={(e) =>
+                            setFormData({ ...formData, title: e.target.value })
+                        }
                         placeholder="Objective title"
+                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-500 dark:bg-gray-900"
                         disabled={loading}
                     />
                 </div>
 
+                {/* Items */}
                 <div>
                     <label className="block text-sm font-medium mb-2">Items</label>
-                    {formData.items.map((item, i) => (
-                        <input
-                            key={i}
-                            type="text"
-                            value={item}
-                            onChange={(e) => {
-                                const newItems = [...formData.items];
-                                newItems[i] = e.target.value;
-                                setFormData({ ...formData, items: newItems });
-                            }}
-                            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg mb-2 focus:ring-2 focus:ring-cyan-500"
-                            placeholder={`Item ${i + 1}`}
-                            disabled={loading}
-                        />
-                    ))}
+                    <div className="space-y-3">
+                        {formData.items.map((item, i) => (
+                            <div key={i} className="flex gap-2">
+                                <input
+                                    type="text"
+                                    value={item}
+                                    onChange={(e) => {
+                                        const newItems = [...formData.items];
+                                        newItems[i] = e.target.value;
+                                        setFormData({ ...formData, items: newItems });
+                                    }}
+                                    placeholder={`Item ${i + 1}`}
+                                    className="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-500 dark:bg-gray-900"
+                                    disabled={loading}
+                                />
+                                {formData.items.length > 1 && (
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRemoveItem(i)}
+                                        className="p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/40 text-red-600"
+                                    >
+                                        <Trash2 className="w-5 h-5" />
+                                    </button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    <button
+                        type="button"
+                        onClick={handleAddItem}
+                        className="mt-3 text-cyan-600 hover:text-cyan-700 text-sm flex items-center gap-1"
+                    >
+                        <Plus className="w-4 h-4" /> Add item
+                    </button>
                 </div>
 
+                {/* Save Button */}
                 <button
                     type="submit"
                     disabled={!formData.title.trim() || loading}
-                    className="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-2 rounded-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                    className="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-2.5 rounded-lg disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                     <Edit className="w-4 h-4" />
                     {loading ? 'Saving...' : 'Update Objective'}

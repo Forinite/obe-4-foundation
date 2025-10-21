@@ -41,12 +41,19 @@ export default defineType({
             ],
         }),
         defineField({
+            name: 'visionStatement',
+            title: 'Vision Statement',
+            type: 'visionStatement',
+        }),
+        defineField({
             name: 'services',
             title: 'Services',
             type: 'array',
             of: [{ type: 'service' }],
             validation: (Rule) => Rule.required().min(1),
         }),
+
+
     ],
     preview: {
         select: {

@@ -41,6 +41,10 @@ export const iconMap: Record<string, React.ComponentType<{ className?: string }>
     ambulance: () => <span aria-hidden="true">🚑</span>,
     hospital: () => <span aria-hidden="true">🏥</span>,
     document: DocumentIcon,
+    shield2: () => <span aria-hidden="true">🛡️</span>,
+    people: () => <span aria-hidden="true">👥️️</span>,
+    alert: () => <span aria-hidden="true">🚨</span>,
+    handshake: () => <span aria-hidden="true">🤝</span>,
 };
 
 export const renderIcon = (icon: string, className: string = 'w-5 h-5 text-cyan-600 dark:text-cyan-400') => {

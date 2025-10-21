@@ -1,20 +1,19 @@
 //app/(components)/adminComponents/About/modal/EditApproachModal.tsx
 
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { updateApproach } from '@/app/actions/about';
 import Modal from '@/app/admin/components/Modal';
 import { Edit } from 'lucide-react';
-import { renderIconOptions } from '@/lib/icons';
+import IconPickerModal from '@/app/admin/components/IconPickerModal';
 
 export default function EditApproachModal({
                                               isOpen,
                                               onClose,
                                               index,
                                               initialApproach,
-                                              onSuccess
+                                              onSuccess,
                                           }: {
     isOpen: boolean;
     onClose: () => void;
@@ -25,19 +24,17 @@ export default function EditApproachModal({
     const [formData, setFormData] = useState({
         icon: '',
         title: '',
-        description: ''
+        description: '',
     });
     const [loading, setLoading] = useState(false);
 
-    // 🔥 FIX: SYNC WITH INITIAL DATA!
     useEffect(() => {
         if (isOpen && initialApproach) {
             setFormData({
                 icon: initialApproach.icon || 'map',
                 title: initialApproach.title || '',
-                description: initialApproach.description || ''
+                description: initialApproach.description || '',
             });
-            console.log('🔥 APPROACH SET:', initialApproach);
         }
     }, [isOpen, initialApproach]);
 
@@ -59,47 +56,58 @@ export default function EditApproachModal({
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} title="Edit Approach">
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
+                {/* Icon Picker */}
                 <div>
-                    <label className="block text-sm font-medium mb-2">Icon</label>
-                    <select
-                        value={formData.icon}
-                        onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-emerald-500"
-                        disabled={loading}
-                    >
-                        {renderIconOptions()}
-                    </select>
+                    <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                        Icon
+                    </label>
+                    <IconPickerModal
+                        selected={formData.icon}
+                        onSelect={(icon) => setFormData({ ...formData, icon })}
+                        color="emerald"
+                    />
                 </div>
 
+                {/* Title */}
                 <div>
-                    <label className="block text-sm font-medium mb-2">Title</label>
+                    <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                        Title
+                    </label>
                     <input
                         type="text"
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-emerald-500"
-                        placeholder="Approach title"
+                        className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:ring-2 focus:ring-emerald-500 outline-none transition"
+                        placeholder="Edit approach title"
                         disabled={loading}
                     />
                 </div>
 
+                {/* Description */}
                 <div>
-                    <label className="block text-sm font-medium mb-2">Description</label>
+                    <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                        Description
+                    </label>
                     <textarea
                         value={formData.description}
-                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-emerald-500"
+                        onChange={(e) =>
+                            setFormData({ ...formData, description: e.target.value })
+                        }
+                        className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:ring-2 focus:ring-emerald-500 outline-none transition"
                         rows={3}
-                        placeholder="Approach description"
+                        placeholder="Edit approach description"
                         disabled={loading}
                     />
                 </div>
 
+                {/* Submit */}
                 <button
                     type="submit"
-                    disabled={!formData.title.trim() || !formData.description.trim() || loading}
-                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                    disabled={
+                        !formData.title.trim() || !formData.description.trim() || loading
+                    }
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg flex items-center justify-center gap-2 transition disabled:opacity-50"
                 >
                     <Edit className="w-4 h-4" />
                     {loading ? 'Saving...' : 'Update Approach'}

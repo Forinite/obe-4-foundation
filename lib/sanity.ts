@@ -26,10 +26,12 @@ export async function getHomeData(): Promise<HomeData> {
       _type,
       missionStatements,
       missionInfo,
+      visionStatement,
       services
     }
   `);
 }
+
 
 export async function getAboutData(): Promise<AboutData> {
     return client.fetch(`
@@ -74,7 +76,3 @@ export async function getFooterData(): Promise<FooterData> {
     }
   `);
 }
-
-// Add to your existing sanity.ts file
-
-// import { client } from './sanity'; // Your existing client

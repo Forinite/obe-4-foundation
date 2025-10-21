@@ -28,7 +28,7 @@ export default function ObjectiveCard({ objective, index, onEdit, onDelete, onRe
 
             <div className="flex items-start justify-between mb-4 relative z-10">
                 <div className="flex items-center gap-3">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-500/20 to-cyan-500/20 text-fuchsia-600 dark:text-cyan-400 group-hover:scale-110 transition-transform duration-300">
+                    <div className="flex items-center justify-center min-w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-500/20 to-cyan-500/20 text-fuchsia-600 dark:text-cyan-400 group-hover:scale-110 transition-transform duration-300">
                         {renderIcon(objective.icon)}
                     </div>
                     <h4 className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 tracking-tight">
