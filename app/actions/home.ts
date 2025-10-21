@@ -52,3 +52,18 @@ export async function updateMissionInfo(info: { percentage: number; text: string
     await client.patch(home._id).set({ missionInfo: info }).commit();
     revalidatePath('/admin/dashboard');
 }
+
+// 🔹 ✅ NEW: Update Vision Statement
+export async function updateVisionStatement(vision: {
+    title: string;
+    mainStatement: string;
+    highlight: string;
+    goals: string[];
+}) {
+    const home = await getHomeData();
+    await client
+        .patch(home._id)
+        .set({ visionStatement: vision })
+        .commit();
+    revalidatePath('/admin/dashboard');
+}

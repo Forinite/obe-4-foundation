@@ -1,34 +1,33 @@
-// /sanity/schemaTypes/objects/visionStatement.ts
 import { defineType, defineField } from 'sanity';
-import { Eye } from 'lucide-react';
 
-export default defineType({
+export const visionStatement = defineType({
     name: 'visionStatement',
     title: 'Vision Statement',
     type: 'object',
-    icon: Eye,
     fields: [
         defineField({
             name: 'title',
             title: 'Title',
             type: 'string',
-            description: 'Short title for this vision statement (e.g., "Saving Lives Daily")',
             validation: (Rule) => Rule.required(),
         }),
         defineField({
-            name: 'description',
-            title: 'Description',
+            name: 'mainStatement',
+            title: 'Main Statement',
             type: 'text',
-            rows: 4,
-            description: 'Main description text for the vision statement section.',
             validation: (Rule) => Rule.required(),
         }),
         defineField({
-            name: 'points',
-            title: 'Key Points',
+            name: 'highlight',
+            title: 'Highlight',
+            type: 'string',
+        }),
+        defineField({
+            name: 'goals',
+            title: 'Goals',
             type: 'array',
             of: [{ type: 'string' }],
-            description: 'List of specific goals or focus areas under this vision.',
+            validation: (Rule) => Rule.required().min(1),
         }),
     ],
 });

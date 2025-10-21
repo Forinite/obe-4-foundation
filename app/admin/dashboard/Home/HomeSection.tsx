@@ -19,6 +19,8 @@ import {
     addService, deleteService,
     updateMissionInfo
 } from '@/app/actions/home';
+import UpdateVisionStatementModal from "@/app/(components)/adminComponents/Home/modals/UpdateVisionStatementModal";
+import VisionStatementCard from "@/app/(components)/adminComponents/Home/VisionStatementCard";
 
 export default function HomeSection() {
     const { data, loading, error, refetch } = useHomeData();
@@ -46,6 +48,7 @@ export default function HomeSection() {
     const [deleteMissionIndex, setDeleteMissionIndex] = useState(-1);
 
     const [showDeleteMissionInfoModal, setShowDeleteMissionInfoModal] = useState(false);
+    const [showEditVisionModal, setShowEditVisionModal] = useState(false);
 
     const handleSuccess = () => {
         refetch();
@@ -92,6 +95,7 @@ export default function HomeSection() {
     if (error) return <div className="p-6 text-center text-red-500">Error: {error}</div>;
     if (!data) return <div className="p-6 text-center">No data</div>;
 
+    console.log(data.visionStatement)
     return (
         <>
             <div className="space-y-12 animate-fadeIn">
@@ -151,6 +155,13 @@ export default function HomeSection() {
                         </p>
                     )}
                 </section>
+
+                {/*vision section*/}
+                <VisionStatementCard
+                    data={data?.visionStatement}
+                    onEdit={() => setShowEditVisionModal(true)}
+                />
+
 
                 {/* 🔥 SERVICES */}
                 <section className="p-6 bg-white/80 dark:bg-gray-900/50 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300">
@@ -223,6 +234,14 @@ export default function HomeSection() {
                 initialData={data.missionInfo!}
                 onSuccess={handleSuccess}
             />
+
+            <UpdateVisionStatementModal
+                isOpen={showEditVisionModal}
+                onClose={() => setShowEditVisionModal(false)}
+                existingData={data.visionStatement}
+                onSuccess={handleSuccess}
+            />
+
 
             {/* 🔥 DELETE MODALS */}
             {showDeleteServiceModal && (

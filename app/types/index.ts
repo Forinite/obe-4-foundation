@@ -33,6 +33,13 @@ export interface ChallengeItem {
     text: string;
 }
 
+export interface VisionStatement {
+    title: string;
+    description: string;
+    points: string[];
+}
+
+
 export interface HomeData {
     _id: string;
     _type: 'home';
@@ -42,6 +49,7 @@ export interface HomeData {
         text: string;
         list: string[];
     };
+    visionStatement: VisionStatement;
     services: Service[];
 }
 
@@ -95,3 +103,6 @@ export interface FooterData {
     _type: 'footer';
     programLinks: Link[];
 }
+
+
+
