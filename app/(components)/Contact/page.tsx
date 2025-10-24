@@ -1,12 +1,52 @@
 // app/(components)/Contact/page.tsx
+import { getContactData } from '@/lib/sanity';
+import { ContactData } from '@/app/types';
+import ContactHeader from '@/app/subcomponents/ContactComponents/ContactHeader';
+import ContactInfoCard from '@/app/subcomponents/ContactComponents/ContactInfoCard';
+import ContactForm from '@/app/subcomponents/ContactComponents/ContactForm';
+import FAQCard from '@/app/subcomponents/ContactComponents/FAQCard';
+import {Clock, Mail, MapPin, Phone} from "lucide-react";
 
-import ContactHeader from "@/app/subcomponents/ContactComponents/ContactHeader";
-import ContactInfoCard from "@/app/subcomponents/ContactComponents/ContactInfoCard";
-import ContactForm from "@/app/subcomponents/ContactComponents/ContactForm";
-import FAQCard from "@/app/subcomponents/ContactComponents/FAQCard";
-import { contactInfo, faqs } from "@/app/constants/contactData";
+export const dynamic = 'force-dynamic'; // Ensure SSR
 
-const Contact: React.FC = () => {
+export default async function Contact() {
+    const data: ContactData = await getContactData();
+
+    if (!data) {
+        return (
+            <div className="min-h-screen bg-gradient-to-b from-white via-purple-50/40 to-pink-50/40 text-center pt-32">
+                No data
+            </div>
+        );
+    }
+
+    const contactInfo = [
+        {
+            icon: MapPin,
+            title: 'Address',
+            subtitle: `${data.generalInfo.address1}${data.generalInfo.address2 ? ', ' + data.generalInfo.address2 : ''}`,
+            content: 'Visit us at our offices'
+        },
+        {
+            icon: Phone,
+            title: 'Phone',
+            subtitle: `${data.generalInfo.phone1}${data.generalInfo.phone2 ? ', ' + data.generalInfo.phone2 : ''}`,
+            content: 'Call us for inquiries'
+        },
+        {
+            icon: Mail,
+            title: 'Email',
+            subtitle: data.generalInfo.email,
+            content: 'Reach out via email'
+        },
+        {
+            icon: Clock,
+            title: 'Open Hours',
+            subtitle: data.generalInfo.openDays.map((day: any) => `${day.day}: ${day.time}`).join(', '),
+            content: 'Our operating hours'
+        }
+    ];
+
     return (
         <main className="relative flex-1 z-20 bg-gradient-to-b from-white via-purple-50/40 to-pink-50/40">
             {/* Subtle background decor */}
@@ -53,7 +93,7 @@ const Contact: React.FC = () => {
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-8 sm:gap-10">
-                            {faqs.map((faq, index) => (
+                            {data.faqs.map((faq, index) => (
                                 <FAQCard key={index} question={faq.question} answer={faq.answer} />
                             ))}
                         </div>
@@ -65,6 +105,4 @@ const Contact: React.FC = () => {
             </div>
         </main>
     );
-};
-
-export default Contact;
+}

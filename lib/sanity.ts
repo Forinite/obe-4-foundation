@@ -1,4 +1,4 @@
-// app/lib/sanity.ts
+// lib/sanity.ts
 
 import { createClient } from 'next-sanity';
 import {HomeData, AboutData, ContactData, GalleryImage, FooterData, Service} from '@/app/types';

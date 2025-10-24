@@ -1,14 +1,15 @@
 //app/(components)/About/page.tsx
-
 import { Metadata } from 'next';
-import { challengeData, objectives, approach } from '@/app/constants/aboutData';
-import SectionHeader from "@/app/subcomponents/AboutComponents/SectionHeader";
-import VisionCard from "@/app/subcomponents/HomeComponents/VisionCard";
-import MissionCard from "@/app/subcomponents/AboutComponents/MissionCard";
-import Gallery from "@/app/subcomponents/AboutComponents/Gallery";
-import ChallengeCard from "@/app/subcomponents/AboutComponents/ChallengeCard";
-import ObjectiveCard from "@/app/subcomponents/AboutComponents/ObjectiveCard";
-import ServiceCard from "@/app/subcomponents/HomeComponents/ServiceCard";
+import { getAboutData } from '@/lib/sanity';
+import {AboutData, HomeData} from '@/app/types';
+import SectionHeader from '@/app/subcomponents/AboutComponents/SectionHeader';
+import VisionCard from '@/app/subcomponents/HomeComponents/VisionCard';
+import MissionCard from '@/app/subcomponents/AboutComponents/MissionCard';
+import Gallery from '@/app/subcomponents/AboutComponents/Gallery';
+import ChallengeCard from '@/app/subcomponents/AboutComponents/ChallengeCard';
+import ObjectiveCard from '@/app/subcomponents/AboutComponents/ObjectiveCard';
+import ServiceCard from '@/app/subcomponents/HomeComponents/ServiceCard';
+import {getHomeData} from "@/lib/sanity";
 
 export const metadata: Metadata = {
     title: 'About | Dr. Obe Charity Foundation',
@@ -21,7 +22,20 @@ export const metadata: Metadata = {
     },
 };
 
-export default function About() {
+export const dynamic = 'force-dynamic'; // Ensure SSR
+
+export default async function About() {
+    const data: AboutData = await getAboutData();
+    const homeData: HomeData = await getHomeData();
+
+    if (!data) {
+        return (
+            <div className="min-h-screen bg-gradient-to-b from-white via-[#f7f7ff] to-[#f9faff] text-center pt-32">
+                No data
+            </div>
+        );
+    }
+
     return (
         <main className="relative flex-1 bg-gradient-to-b from-white via-[#f7f7ff] to-[#f9faff] overflow-hidden">
             {/* Decorative gradient backdrop */}
@@ -39,11 +53,11 @@ export default function About() {
                 <div className="grid md:grid-cols-2 gap-10">
                     <div className="group relative bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-500">
                         <div className="absolute inset-0 bg-gradient-to-br from-[#ffe4ec]/40 to-[#e5e5ff]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <VisionCard />
+                        <VisionCard visionStatement={homeData.visionStatement} />
                     </div>
                     <div className="group relative bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-500">
                         <div className="absolute inset-0 bg-gradient-to-bl from-[#e0f3ff]/40 to-[#fbe9ff]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <MissionCard />
+                        <MissionCard missionStatements={homeData.missionStatements} />
                     </div>
                 </div>
 
@@ -56,10 +70,10 @@ export default function About() {
                 {/* Challenge Section */}
                 <div className="max-w-6xl mx-auto">
                     <ChallengeCard
-                        statistic={challengeData.statistic}
-                        description={challengeData.description}
-                        subDescription={challengeData.subDescription}
-                        items={challengeData.items}
+                        statistic={data.challengeData.statistic}
+                        description={data.challengeData.description}
+                        subDescription={data.challengeData.subDescription}
+                        items={data.challengeData.items}
                     />
                 </div>
 
@@ -70,7 +84,7 @@ export default function About() {
                     </h1>
 
                     <div className="grid md:grid-cols-2 gap-8">
-                        {objectives.map((objective) => (
+                        {data.objectives.map((objective) => (
                             <div
                                 key={objective.title}
                                 className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-[#d0a9ff]/30 transition-all duration-500 p-6"
@@ -89,7 +103,7 @@ export default function About() {
                 <div className="space-y-10">
                     <SectionHeader title="Our Approach" />
                     <div className="grid md:grid-cols-3 gap-8">
-                        {approach.map((item, index) => (
+                        {data.approach.map((item, index) => (
                             <div
                                 key={item.title}
                                 className="group relative bg-white rounded-2xl border border-gray-100 p-6 shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_25px_rgba(0,0,0,0.07)] transition-all duration-500"

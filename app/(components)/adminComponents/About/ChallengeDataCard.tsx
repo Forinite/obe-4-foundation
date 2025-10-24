@@ -34,7 +34,7 @@ export default function ChallengeDataCard({ data, onEdit, onDelete, onRefetch }:
                     <p className="text-sm text-gray-400">Challenge Statistic</p>
                 </div>
 
-                <div className="flex items-center gap-3 opacity-80 group-hover:opacity-100 transition-opacity">
+                <div className=" absolute right-4 flex items-center gap-3 opacity-80 group-hover:opacity-100 transition-opacity">
                     <button
                         onClick={onEdit}  // 🔥 CALLBACK
                         className="p-2 rounded-lg bg-gray-800/70 hover:bg-cyan-600/20 text-cyan-400 hover:text-cyan-300 transition-colors"

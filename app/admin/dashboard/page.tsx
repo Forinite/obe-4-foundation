@@ -15,7 +15,7 @@ const navItems = [
 export default function Dashboard() {
 
     return (
-        <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div className="flex max-w-16 min-h-screen bg-gray-100 dark:bg-gray-900">
 
             <HomeDashboard />
         </div>

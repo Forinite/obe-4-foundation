@@ -1,15 +1,21 @@
 //app/(component)/HomePage.tsx
+import Link from 'next/link';
+import { Calendar, HeartPulse, Stethoscope, Users } from 'lucide-react';
+import { getHomeData } from '@/lib/sanity';
+import VisionCard from '@/app/subcomponents/HomeComponents/VisionCard';
+import MissionCard from '@/app/subcomponents/HomeComponents/MissionCard';
+import ServiceCard from '@/app/subcomponents/HomeComponents/ServiceCard';
+import { HomeData } from '@/app/types';
 
-import Link from "next/link";
-import { Calendar, HeartPulse, Stethoscope, Users } from "lucide-react";
-import VisionCard from "@/app/subcomponents/HomeComponents/VisionCard";
-import MissionCard from "@/app/subcomponents/HomeComponents/MissionCard";
-import ServiceCard from "@/app/subcomponents/HomeComponents/ServiceCard";
-import { services } from "@/app/constants/homeData";
+export const dynamic = 'force-dynamic'; // Ensure SSR
 
-export const dynamic = "force-static";
+export default async function HomePage() {
+    const data: HomeData = await getHomeData();
 
-export default function HomePage() {
+    if (!data) {
+        return <div className="min-h-screen bg-[#060b14] text-gray-200 text-center pt-32">No data</div>;
+    }
+
     return (
         <main className="relative min-h-screen w-full overflow-hidden bg-[#060b14] text-gray-200">
             {/* Particle & gradient background */}
@@ -57,8 +63,8 @@ export default function HomePage() {
 
             {/* Vision + Mission */}
             <section className="relative z-10 px-6 md:px-12 py-10 max-w-6xl mx-auto space-y-12">
-                <VisionCard />
-                <MissionCard />
+                <VisionCard visionStatement={data.visionStatement} />
+                <MissionCard missionStatements={data.missionStatements} missionInfo={data.missionInfo} />
             </section>
 
             {/* Services */}
@@ -67,8 +73,14 @@ export default function HomePage() {
                     Our Core Services
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                    {services.map((service, i) => (
-                        <ServiceCard key={i} id={i + 1} icon={service.icon} title={service.title} description={service.description} />
+                    {data.services.map((service, i) => (
+                        <ServiceCard
+                            key={i}
+                            id={i + 1}
+                            icon={service.icon}
+                            title={service.title}
+                            description={service.description}
+                        />
                     ))}
                 </div>
             </section>
@@ -98,4 +110,3 @@ export default function HomePage() {
         </main>
     );
 }
-

@@ -34,7 +34,7 @@ export default function ApproachCard({ approach, index, onEdit, onDelete, onRefe
                     </div>
                 </div>
 
-                <div className="flex gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+                <div className="absolute right-4 flex gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
                     <button
                         onClick={onEdit}  // 🔥 CALLBACK
                         className="p-2 rounded-lg bg-gray-800/70 hover:bg-cyan-600/20 text-cyan-400 hover:text-cyan-300 transition-colors"

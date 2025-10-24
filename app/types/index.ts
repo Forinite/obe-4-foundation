@@ -36,7 +36,7 @@ export interface ChallengeItem {
 export interface VisionStatement {
     title: string;
     description: string;
-    points: string[];
+    goals: string[];
 }
 
 
@@ -57,7 +57,7 @@ export interface AboutData {
     _id: string;
     _type: 'about';
     challengeData: {
-        statistic: string;
+        statistic: number;
         description: string;
         subDescription: string;
         items: ChallengeItem[];

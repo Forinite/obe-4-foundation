@@ -1,9 +1,17 @@
 //app/subcomponents/HomeComponents/MissionCard.tsx
 
-import { Target } from "lucide-react";
-import { missionInfo, missionStatements } from "@/app/constants/homeData";
+import { Target } from 'lucide-react';
 
-export default function MissionCard() {
+interface MissionCardProps {
+    missionStatements?: string[];
+    missionInfo?: {
+        percentage: number;
+        text: string;
+        list: string[];
+    };
+}
+
+export default function MissionCard({ missionStatements = [], missionInfo = { percentage: 0, text: '', list: [] } }: MissionCardProps) {
     return (
         <div className="relative bg-white/80 dark:bg-[#0b121d]/80 backdrop-blur-md border border-cyan-400/10 rounded-2xl p-6 md:p-8 overflow-hidden transition-all hover:shadow-lg hover:shadow-cyan-400/10 hover:-translate-y-1">
             {/* Subtle background aura */}
@@ -25,9 +33,13 @@ export default function MissionCard() {
 
                 {/* Mission Statements */}
                 <div className="space-y-4 text-black dark:text-gray-300 mb-6 leading-relaxed">
-                    {missionStatements.map((item, index) => (
-                        <p key={index}>{item}</p>
-                    ))}
+                    {missionStatements.length > 0 ? (
+                        missionStatements.map((item, index) => (
+                            <p key={index}>{item}</p>
+                        ))
+                    ) : (
+                        <p>No mission statements available.</p>
+                    )}
                 </div>
 
                 {/* Circular progress visual */}
@@ -62,20 +74,24 @@ export default function MissionCard() {
                             </defs>
                         </svg>
                         <span className="absolute inset-0 flex items-center justify-center text-xl font-semibold text-cyan-500">
-              {missionInfo.percentage}
-            </span>
+                            {missionInfo.percentage || 0}
+                        </span>
                     </div>
 
                     <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{missionInfo.text}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{missionInfo.text || 'No progress text available.'}</p>
                     </div>
                 </div>
 
                 {/* Bullet list */}
                 <ul className="text-sm text-gray-700 dark:text-gray-400 space-y-2 list-disc list-inside leading-relaxed">
-                    {missionInfo.list.map((item, index) => (
-                        <li key={index}>{item}</li>
-                    ))}
+                    {missionInfo.list.length > 0 ? (
+                        missionInfo.list.map((item, index) => (
+                            <li key={index}>{item}</li>
+                        ))
+                    ) : (
+                        <li>No items available.</li>
+                    )}
                 </ul>
 
                 {/* Accent underline */}

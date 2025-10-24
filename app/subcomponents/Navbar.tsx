@@ -15,22 +15,22 @@ const NewNavbar: React.FC = () => {
     const pathname = usePathname();
 
     return (
-        <nav className="fixed top-0 left-0 w-full bg-white border-b border-blue-300 shadow-sm z-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3 flex justify-between items-center">
+        <nav className="fixed top-0  py-3 left-0 w-full bg-white border-b border-blue-300 shadow-sm z-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-8  flex justify-between items-center">
                 {/* Logo */}
                 <Link href="/" className="flex items-center space-x-2">
                     <Image
                         src="/company-logo.webp"
                         alt="Logo"
-                        width={120}
-                        height={30}
+                        width={240}
+                        height={60}
                         className="object-contain h-[40px]"
                     />
 
                 </Link>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex items-center space-x-6">
+                <div className="hidden md:flex items-center space-x-6 ">
                     {navLinks.map(link => {
                         const isActive = pathname === link.href;
                         return (
@@ -54,7 +54,7 @@ const NewNavbar: React.FC = () => {
                 {/* Mobile Button */}
                 <button
                     onClick={() => setOpen(!open)}
-                    className="md:hidden p-2 rounded-md text-blue-300 hover:bg-[#f3e3f8] transition"
+                    className="md:hidden p-2  rounded-md text-blue-300 hover:bg-[#f3e3f8] transition"
                 >
                     {open ? <X size={22} /> : <Menu size={22} />}
                 </button>

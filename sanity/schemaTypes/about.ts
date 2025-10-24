@@ -15,7 +15,7 @@ export default defineType({
                 defineField({
                     name: 'statistic',
                     title: 'Statistic',
-                    type: 'string',
+                    type: 'number',
                     validation: (Rule) => Rule.required(),
                 }),
                 defineField({
