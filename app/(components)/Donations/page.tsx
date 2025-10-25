@@ -20,7 +20,6 @@ export default function DonationsPage() {
     return (
         <>
             <Donations />
-            <Footer />
         </>
     );
 }

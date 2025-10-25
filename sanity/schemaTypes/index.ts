@@ -12,12 +12,14 @@ import service from './objects/service';
 import objective from './objects/objective';
 import approach from './objects/approach';
 import challengeItem from './objects/challengeItem';
+import donations from "@/sanity/schemaTypes/donations";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     home,
     about,
     contact,
+    donations,
     galleryImage,
     footer,
     link,

@@ -5,6 +5,7 @@ import ImpactCard from "@/app/subcomponents/DonationComponents/ImpactCard";
 import DonationMethodCard from "@/app/subcomponents/DonationComponents/DonationMethodCard";
 import ImportantNote from "@/app/subcomponents/DonationComponents/ImportantNote";
 import {Building, Building2, CreditCard, DollarSign} from "lucide-react";
+import DonationForm from "@/app/subcomponents/DonationComponents/DonationForm";
 
 const Donations: React.FC = () => {
 
@@ -28,18 +29,20 @@ const Donations: React.FC = () => {
                         <h2 className="text-2xl sm:text-3xl font-semibold mb-8 text-center text-cyan-400">
                             Choose Your Preferred Donation Method
                         </h2>
-                        <div className="grid lg:grid-cols-2 gap-8">
-                            {donationMethods.map((method, index) => (
-                                <DonationMethodCard
-                                    key={index}
-                                    title={method.title}
-                                    subtitle={method.subtitle}
-                                    icon={method.icon}
-                                    gradient={method.gradient}
-                                    details={method.details}
-                                />
-                            ))}
-                        </div>
+                        {/*<div className="grid lg:grid-cols-2 gap-8">*/}
+                        {/*    {donationMethods.map((method, index) => (*/}
+                        {/*        <DonationMethodCard*/}
+                        {/*            key={index}*/}
+                        {/*            title={method.title}*/}
+                        {/*            subtitle={method.subtitle}*/}
+                        {/*            icon={method.icon}*/}
+                        {/*            gradient={method.gradient}*/}
+                        {/*            details={method.details}*/}
+                        {/*        />*/}
+                        {/*    ))}*/}
+                        {/*</div>*/}
+
+                        <DonationForm />
                     </div>
                     <div className="mt-16 max-w-4xl mx-auto">
                         <div className="bg-background/50 backdrop-blur-sm border border-cyan-400/20 rounded-2xl p-8">

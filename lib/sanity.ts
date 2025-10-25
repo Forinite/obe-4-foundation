@@ -76,3 +76,20 @@ export async function getFooterData(): Promise<FooterData> {
     }
   `);
 }
+
+export async function getDonations() {
+    return client.fetch(`
+    *[_type == "donation"] | order(date desc) {
+      _id,
+      donorName,
+      donorEmail,
+      message,
+      amount,
+      currency,
+      paymentMethod,
+      status,
+      transactionId,
+      date
+    }
+  `);
+}
