@@ -10,14 +10,17 @@ import {HomeData, AboutData, ContactData, GalleryImage, FooterData, Service} fro
 //     useCdn: false, // Use false for admin dashboard to ensure fresh data
 // });
 
-export const client = createClient({
+
+const config = {
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
     apiVersion: '2025-02-19',
     useCdn: false,
-    token: process.env.SANITY_API_TOKEN!,  // ← ADD ! to force token
-});
+};
 
+export const client = process.env.SANITY_API_TOKEN
+    ? createClient({ ...config, token: process.env.SANITY_API_TOKEN })
+    : createClient(config);
 
 export async function getHomeData(): Promise<HomeData> {
     return client.fetch(`

@@ -1,141 +1,242 @@
 //app/subcomponents/DonationComponents/DonationForm.tsx
 
+
 'use client';
 
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Loader2 } from 'lucide-react';
+
+type PaymentMethod = 'Paystack' | 'PayPal' | 'CashApp' | 'Bank Transfer';
+type Currency = 'NGN' | 'USD';
+
+// Preset amounts — completely independent
+const PRESETS = {
+    NGN: [1000, 5000, 10000, 25000],
+    USD: [5, 10, 20, 50],
+};
 
 export default function DonationForm() {
+    const [currency, setCurrency] = useState<Currency>('NGN');
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('Paystack');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [amount, setAmount] = useState<number | ''>('');
-    const [currency, setCurrency] = useState<'NGN' | 'USD'>('NGN');
-    const [paymentMethod, setPaymentMethod] = useState<'Paystack' | 'CashApp'>('Paystack');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState<string | null>(null);
+    const [csrfToken, setCsrfToken] = useState<string | null>(null);
+
+    // Load CSRF token
+    useEffect(() => {
+        fetch('/api/csrf')
+            .then(r => {
+                if (!r.ok) throw new Error('Failed to load security token');
+                return r.json();
+            })
+            .then(d => setCsrfToken(d.token))
+            .catch(() => setStatus('Security check failed. Please refresh.'));
+    }, []);
 
     const preset = (val: number) => setAmount(val);
 
-    const handlePaystack = async () => {
-        setLoading(true);
-        setStatus(null);
-
-        try {
-            const res = await fetch('/api/donate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, amount, currency, message, paymentMethod }),
-            });
-            const data = await res.json();
-            if (!res.ok) {
-                setStatus(data.error || 'Failed to initialize payment');
-                setLoading(false);
-                return;
-            }
-            // Redirect user to Paystack payment page
-            window.location.href = data.authorization_url;
-        } catch (err) {
-            console.error(err);
-            setStatus('Server error');
-            setLoading(false);
-        }
+    const formatCurrency = (val: number) => {
+        return currency === 'NGN' ? `₦${val.toLocaleString()}` : `$${val}`;
     };
 
-    const handleCashApp = async () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!amount || !email || !csrfToken) {
+            setStatus('Please fill all required fields.');
+            return;
+        }
+
         setLoading(true);
         setStatus(null);
+
         try {
-            const res = await fetch('/api/donation/record', {
+            if (paymentMethod === 'Paystack' && currency !== 'NGN') {
+                throw new Error('Paystack only supports NGN');
+            }
+            if (paymentMethod === 'PayPal' && currency !== 'USD') {
+                throw new Error('PayPal only supports USD');
+            }
+
+            const endpoint =
+                paymentMethod === 'Paystack'
+                    ? '/api/donate'
+                    : paymentMethod === 'PayPal'
+                        ? '/api/donate/paypal'
+                        : '/api/donation/record';
+
+            const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, amount, currency, paymentMethod: 'CashApp', message }),
+                body: JSON.stringify({
+                    name,
+                    email,
+                    amount,
+                    currency,
+                    message,
+                    paymentMethod,
+                    csrfToken,
+                }),
             });
+
             const data = await res.json();
-            if (res.ok) {
-                setStatus('Thank you — we recorded your donation as pending verification.');
-                setName(''); setEmail(''); setAmount(''); setMessage('');
+            if (!res.ok) throw new Error(data.error || 'Failed');
+
+            if (paymentMethod === 'Paystack' || paymentMethod === 'PayPal') {
+                window.location.href = data.authorization_url || data.approval_url;
             } else {
-                setStatus(data.error || 'Failed to record donation');
+                setStatus('Thank you — your donation is pending verification.');
+                setName(''); setEmail(''); setAmount(''); setMessage('');
             }
-        } catch (err) {
-            console.error(err);
-            setStatus('Server error');
+        } catch (err: any) {
+            setStatus(err.message);
         } finally {
             setLoading(false);
         }
     };
 
-    const onSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!amount || !email) {
-            setStatus('Please provide amount and email.');
-            return;
-        }
-        if (paymentMethod === 'Paystack') {
-            await handlePaystack();
-        } else {
-            await handleCashApp();
-        }
-    };
-
     return (
-        <form onSubmit={onSubmit} className="max-w-md mx-auto space-y-4 p-6 bg-white rounded-xl shadow">
-            <h3 className="text-2xl font-semibold">Donate</h3>
+        <form
+            onSubmit={handleSubmit}
+            className="max-w-md mx-auto space-y-6 p-6 bg-white rounded-xl shadow-lg"
+        >
+            {/* === CURRENCY SWITCHER – TOP & BOLD === */}
+            <div className="flex justify-center -mt-10 mb-6">
+                <div className="inline-flex items-center bg-gradient-to-r from-purple-600 to-cyan-500 p-1 rounded-full shadow-lg">
+                    <button
+                        type="button"
+                        onClick={() => setCurrency('NGN')}
+                        className={`px-8 py-3 rounded-full text-lg font-bold transition-all ${
+                            currency === 'NGN'
+                                ? 'bg-white text-purple-700 shadow-md'
+                                : 'text-white hover:text-gray-200'
+                        }`}
+                    >
+                        ₦ NGN
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => setCurrency('USD')}
+                        className={`px-8 py-3 rounded-full text-lg font-bold transition-all ${
+                            currency === 'USD'
+                                ? 'bg-white text-purple-700 shadow-md'
+                                : 'text-white hover:text-gray-200'
+                        }`}
+                    >
+                        $ USD
+                    </button>
+                </div>
+            </div>
 
+            {/* === AMOUNT PRESETS === */}
             <div>
-                <label className="text-sm">Amount</label>
-                <div className="flex gap-2 mt-2">
-                    {[1000,5000,10000,25000].map(v => (
-                        <button type="button" key={v} onClick={() => preset(v)} className={`px-3 py-2 rounded ${amount === v ? 'bg-cyan-600 text-white' : 'bg-gray-100'}`}>
-                            {currency === 'NGN' ? `₦${v.toLocaleString()}` : `$${(v/1000).toFixed(2)}`}
+                <label className="block text-sm font-medium text-gray-700">Amount</label>
+                <div className="flex flex-wrap gap-2 mt-2">
+                    {PRESETS[currency].map(val => (
+                        <button
+                            key={val}
+                            type="button"
+                            onClick={() => preset(val)}
+                            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                                amount === val
+                                    ? 'bg-gradient-to-r from-purple-600 to-cyan-500 text-white shadow-md'
+                                    : 'bg-gray-100 hover:bg-gray-200'
+                            }`}
+                        >
+                            {formatCurrency(val)}
                         </button>
                     ))}
                     <input
                         type="number"
+                        min="1"
                         placeholder="Custom"
-                        value={amount || ''}
-                        onChange={(e) => setAmount(Number(e.target.value))}
-                        className="ml-2 px-3 py-2 border rounded w-full"
+                        value={amount}
+                        onChange={e => setAmount(e.target.value ? Number(e.target.value) : '')}
+                        className="flex-1 min-w-[120px] px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
+                        required
                     />
                 </div>
             </div>
 
-            <div className="flex gap-3">
-                <label>
-                    <input type="radio" name="currency" checked={currency === 'NGN'} onChange={() => setCurrency('NGN')} /> NGN
-                </label>
-                <label>
-                    <input type="radio" name="currency" checked={currency === 'USD'} onChange={() => setCurrency('USD')} /> USD
-                </label>
-            </div>
-
+            {/* === PAYMENT METHOD === */}
             <div>
-                <label>Payment Method</label>
-                <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value as any)} className="w-full px-3 py-2 border rounded">
-                    <option value="Paystack">Paystack (Card / PayPal / Bank)</option>
-                    <option value="CashApp">Cash App / Manual</option>
+                <label className="block text-sm font-medium text-gray-700">Payment Method</label>
+                <select
+                    value={paymentMethod}
+                    onChange={e => setPaymentMethod(e.target.value as PaymentMethod)}
+                    className="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
+                    disabled={loading}
+                >
+                    {currency === 'NGN' ? (
+                        <>
+                            <option value="Paystack">Paystack (Card / Bank)</option>
+                            <option value="CashApp">Cash App / Manual</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                        </>
+                    ) : (
+                        <>
+                            <option value="PayPal">PayPal (International)</option>
+                            <option value="CashApp">Cash App / Manual</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                        </>
+                    )}
                 </select>
             </div>
 
-            <div>
-                <input placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 border rounded" />
-            </div>
+            {/* === NAME & EMAIL === */}
+            <input
+                placeholder="Full Name"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
+            />
+            <input
+                type="email"
+                placeholder="Email *"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
+                required
+            />
 
-            <div>
-                <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-3 py-2 border rounded" />
-            </div>
+            {/* === MESSAGE === */}
+            <textarea
+                placeholder="Message (optional)"
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+                rows={3}
+                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
+            />
 
-            <div>
-                <textarea placeholder="Message (optional)" value={message} onChange={(e) => setMessage(e.target.value)} className="w-full px-3 py-2 border rounded" />
-            </div>
+            {/* === SUBMIT BUTTON === */}
+            <button
+                type="submit"
+                disabled={loading || !csrfToken}
+                className={`
+          w-full py-4 rounded-lg font-bold text-white text-lg transition-all flex items-center justify-center gap-2
+          ${loading || !csrfToken
+                    ? 'bg-purple-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-700 hover:to-cyan-600 shadow-lg'
+                }
+        `}
+            >
+                {loading ? (
+                    <>Processing… <Loader2 className="animate-spin w-5 h-5" /></>
+                ) : csrfToken ? (
+                    'Donate Securely'
+                ) : (
+                    'Loading security…'
+                )}
+            </button>
 
-            <div>
-                <button disabled={loading} type="submit" className="w-full py-3 rounded bg-purple-600 text-white">
-                    {loading ? 'Processing...' : 'Donate Securely'}
-                </button>
-            </div>
-
-            {status && <p className="text-sm text-center mt-2">{status}</p>}
+            {status && (
+                <p className={`text-center text-sm mt-2 ${status.includes('Thank you') ? 'text-green-600' : 'text-red-600'}`}>
+                    {status}
+                </p>
+            )}
         </form>
     );
 }

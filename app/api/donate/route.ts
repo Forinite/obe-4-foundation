@@ -1,18 +1,48 @@
 // app/api/donate/route.ts
 import { NextResponse } from 'next/server';
 import { client } from '@/lib/sanity';
+import { cookies } from 'next/headers';
+import crypto from 'crypto';
+
+
+function validateCsrf(token: string) {
+    const cookie = cookies().get('csrf_token')?.value;
+    return cookie && crypto.timingSafeEqual(Buffer.from(cookie), Buffer.from(token));
+}
 
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { name, email, amount, currency = 'NGN', message, paymentMethod } = body;
+        const {
+            name,
+            email,
+            amount,
+            currency = 'NGN',
+            message,
+            paymentMethod,
+            csrfToken,
+        } = body;
 
-        if (!email || !amount) {
-            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-        }
+        if (!validateCsrf(csrfToken))
+            return NextResponse.json({ error: 'Invalid CSRF token' }, { status: 403 });
 
-        const paystackAmount = currency === 'NGN' ? Math.round(amount * 100) : Math.round(amount * 100); // Paystack expects kobo/cents
-        // Initialize transaction with Paystack
+        if (!email || !amount || currency !== 'NGN')
+            return NextResponse.json({ error: 'NGN & email required' }, { status: 400 });
+
+        // Create pending record
+        const pending = await client.create({
+            _type: 'donation',
+            donorName: name || 'Anonymous',
+            donorEmail: email,
+            message: message || '',
+            amount,
+            currency,
+            paymentMethod,
+            status: 'pending',
+            date: new Date().toISOString(),
+        });
+
+        const paystackAmount = Math.round(amount * 100);
         const initRes = await fetch('https://api.paystack.co/transaction/initialize', {
             method: 'POST',
             headers: {
@@ -21,27 +51,23 @@ export async function POST(req: Request) {
             },
             body: JSON.stringify({
                 email,
-                amount: paystackAmount, // in kobo/cents
+                amount: paystackAmount,
                 currency,
-                callback_url: `${process.env.APP_URL}/api/donate/verify`, // Paystack redirects here with reference as query
-                metadata: {
-                    name,
-                    message,
-                    paymentMethod,
-                },
+                callback_url: `${process.env.APP_URL}/api/donate/verify`,
+                metadata: { name, message, paymentMethod, sanityId: pending._id },
             }),
         });
 
         const data = await initRes.json();
-        if (!initRes.ok) {
-            return NextResponse.json({ error: data.message || 'Paystack init failed', data }, { status: 500 });
-        }
+        if (!initRes.ok) return NextResponse.json({ error: data.message }, { status: 500 });
 
-        // Optionally create a pending donation record in Sanity to track it
-        // We'll create after verification to avoid storing failed attempts. If you want pending, uncomment:
-        // await client.create({ _type: 'donation', donorName: name, donorEmail: email, amount, currency, paymentMethod, status: 'pending', date: new Date().toISOString() });
+        // Store reference on pending doc
+        await client.patch(pending._id).set({ transactionId: data.data.reference }).commit();
 
-        return NextResponse.json({ authorization_url: data.data.authorization_url, reference: data.data.reference });
+        return NextResponse.json({
+            authorization_url: data.data.authorization_url,
+            reference: data.data.reference,
+        });
     } catch (err) {
         console.error(err);
         return NextResponse.json({ error: 'Server error' }, { status: 500 });
