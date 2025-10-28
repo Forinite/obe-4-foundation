@@ -1,6 +1,5 @@
 // lib/email.ts
 
-
 import nodemailer from 'nodemailer';
 
 const escape = (str: string) => str.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]!);

@@ -1,4 +1,4 @@
-// app/(components)/about/page.tsx
+// app/admin/dashboard/layout.tsx
 
 
 

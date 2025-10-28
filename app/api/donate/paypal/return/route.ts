@@ -2,7 +2,8 @@
 
 import { NextResponse } from 'next/server';
 import { client } from '@/lib/sanity';
-import { getAccessToken } from './route';
+import { getAccessToken } from './route'; // ← Now works
+import { sendDonorEmail, sendAdminNotification } from '@/lib/email';
 
 export async function GET(req: Request) {
     const url = new URL(req.url);
@@ -17,28 +18,48 @@ export async function GET(req: Request) {
         });
         const capture = await captureRes.json();
 
-        if (!captureRes.ok || capture.status !== 'COMPLETED')
-            return NextResponse.redirect(`${process.env.APP_URL}/donate?status=error`);
+        const existing = await client.fetch(`*[_type == "donation" && transactionId == $id][0]`, { id: token });
+        if (!existing) return NextResponse.redirect(`${process.env.APP_URL}/donate?status=error`);
 
-        const purchase = capture.purchase_units[0];
-        const amount = Number(purchase.payments.captures[0].amount.value);
-        const transactionId = purchase.payments.captures[0].id;
+        if (captureRes.ok && capture.status === 'COMPLETED') {
+            const purchase = capture.purchase_units[0];
+            const amount = Number(purchase.payments.captures[0].amount.value);
+            const transactionId = purchase.payments.captures[0].id;
 
-        // locate pending record via transactionId (order ID)
-        const pending = await client.fetch `*[_type == "donation" && transactionId == $id][0]`, { id: token });
-        if (!pending) return NextResponse.redirect(`${process.env.APP_URL}/donate?status=error`);
+            await client
+                .patch(existing._id)
+                .set({
+                    amount,
+                    status: 'completed',
+                    transactionId,
+                    metadata: { raw: JSON.stringify(capture) },
+                })
+                .commit();
 
-        await client
-            .patch(pending._id)
-            .set({
+            await sendDonorEmail({ to: existing.donorEmail, name: existing.donorName, amount, currency: 'USD', transactionId });
+            await sendAdminNotification({
+                to: process.env.ADMIN_EMAIL!,
+                donorName: existing.donorName,
+                donorEmail: existing.donorEmail,
                 amount,
-                status: 'completed',
+                currency: 'USD',
+                paymentMethod: 'PayPal',
                 transactionId,
-                metadata: { raw: JSON.stringify(capture) },
-            })
-            .commit();
+            });
 
-        return NextResponse.redirect(`${process.env.APP_URL}/donate?status=success&ref=${transactionId}`);
+            return NextResponse.redirect(`${process.env.APP_URL}/donate?status=success&ref=${transactionId}`);
+        } else {
+            // MARK AS FAILED
+            await client
+                .patch(existing._id)
+                .set({
+                    status: 'failed',
+                    metadata: { error: JSON.stringify(capture) },
+                })
+                .commit();
+
+            return NextResponse.redirect(`${process.env.APP_URL}/donate?status=failed&ref=${token}`);
+        }
     } catch (err) {
         console.error(err);
         return NextResponse.redirect(`${process.env.APP_URL}/donate?status=error`);

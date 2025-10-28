@@ -1,14 +1,13 @@
 //app/api/donate/paypal/route.ts
-
 import { NextResponse } from 'next/server';
 import { client } from '@/lib/sanity';
 import { cookies } from 'next/headers';
 
 const PAYPAL_CLIENT = process.env.PAYPAL_CLIENT_ID!;
 const PAYPAL_SECRET = process.env.PAYPAL_SECRET!;
-const PAYPAL_API = 'https://api-m.sandbox.paypal.com'; // switch to live in prod
+const PAYPAL_API = 'https://api-m.sandbox.paypal.com';
 
-async function getAccessToken() {
+export async function getAccessToken() {
     const auth = Buffer.from(`${PAYPAL_CLIENT}:${PAYPAL_SECRET}`).toString('base64');
     const res = await fetch(`${PAYPAL_API}/v1/oauth2/token`, {
         method: 'POST',
@@ -23,12 +22,14 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
         const { name, email, amount, message, csrfToken } = body;
-        if (!cookies().get('csrf_token')?.value || cookies().get('csrf_token')?.value !== csrfToken)
+
+        const cookieStore = await cookies(); // ← AWAIT
+        const storedToken = cookieStore.get('csrf_token')?.value;
+        if (!storedToken || storedToken !== csrfToken)
             return NextResponse.json({ error: 'CSRF' }, { status: 403 });
 
         if (!email || !amount) return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
 
-        // pending record
         const pending = await client.create({
             _type: 'donation',
             donorName: name || 'Anonymous',
@@ -42,6 +43,10 @@ export async function POST(req: Request) {
         });
 
         const accessToken = await getAccessToken();
+        // ... inside the try block, after creating the pending record
+
+        const amountStr = amount.toFixed(2);   // ← MUST be a string with 2 decimals
+
         const orderRes = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
             method: 'POST',
             headers: {
@@ -50,13 +55,21 @@ export async function POST(req: Request) {
             },
             body: JSON.stringify({
                 intent: 'CAPTURE',
-                purchase_units: [{ amount: { currency_code: 'USD', value: amount.toFixed(2) } }],
+                purchase_units: [
+                    {
+                        amount: {
+                            currency_code: 'USD',
+                            value: amountStr,               // ← STRING, not number
+                        },
+                    },
+                ],
                 application_context: {
                     brand_name: 'Dr. Obe Charity Foundation',
                     landing_page: 'BILLING',
                     user_action: 'PAY_NOW',
                     return_url: `${process.env.APP_URL}/api/donate/paypal/return`,
                     cancel_url: `${process.env.APP_URL}/donate?status=error`,
+                    shipping_preference: 'NO_SHIPPING',
                 },
             }),
         });
@@ -64,7 +77,6 @@ export async function POST(req: Request) {
         const order = await orderRes.json();
         if (!orderRes.ok) return NextResponse.json({ error: order.message }, { status: 500 });
 
-        // store PayPal order ID
         await client.patch(pending._id).set({ transactionId: order.id }).commit();
 
         const approval = order.links.find((l: any) => l.rel === 'approve')?.href;

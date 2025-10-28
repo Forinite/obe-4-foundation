@@ -42,44 +42,22 @@ export default function DonationForm() {
     const formatCurrency = (val: number) => {
         return currency === 'NGN' ? `₦${val.toLocaleString()}` : `$${val}`;
     };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!amount || !email || !csrfToken) {
-            setStatus('Please fill all required fields.');
-            return;
-        }
+        if (!amount || !email || !csrfToken) return setStatus('Fill required fields');
 
         setLoading(true);
         setStatus(null);
 
         try {
-            if (paymentMethod === 'Paystack' && currency !== 'NGN') {
-                throw new Error('Paystack only supports NGN');
-            }
-            if (paymentMethod === 'PayPal' && currency !== 'USD') {
-                throw new Error('PayPal only supports USD');
-            }
-
-            const endpoint =
-                paymentMethod === 'Paystack'
-                    ? '/api/donate'
-                    : paymentMethod === 'PayPal'
-                        ? '/api/donate/paypal'
-                        : '/api/donation/record';
+            let endpoint = '/api/donation/record';
+            if (paymentMethod === 'Paystack') endpoint = '/api/donate';
+            else if (paymentMethod === 'PayPal') endpoint = '/api/donate/paypal';
 
             const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    amount,
-                    currency,
-                    message,
-                    paymentMethod,
-                    csrfToken,
-                }),
+                body: JSON.stringify({ name, email, amount, currency, message, paymentMethod, csrfToken }),
             });
 
             const data = await res.json();
@@ -88,7 +66,7 @@ export default function DonationForm() {
             if (paymentMethod === 'Paystack' || paymentMethod === 'PayPal') {
                 window.location.href = data.authorization_url || data.approval_url;
             } else {
-                setStatus('Thank you — your donation is pending verification.');
+                setStatus('Thank you! We’ll verify your donation.');
                 setName(''); setEmail(''); setAmount(''); setMessage('');
             }
         } catch (err: any) {
@@ -167,19 +145,19 @@ export default function DonationForm() {
                 <select
                     value={paymentMethod}
                     onChange={e => setPaymentMethod(e.target.value as PaymentMethod)}
-                    className="mt-1 w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
-                    disabled={loading}
+                    className="mt-1 w-full px-3 py-2 border rounded-lg"
                 >
                     {currency === 'NGN' ? (
                         <>
-                            <option value="Paystack">Paystack (Card / Bank)</option>
-                            <option value="CashApp">Cash App / Manual</option>
+                            <option value="Paystack">Paystack (Card / Bank – NGN)</option>
+                            <option value="CashApp">Cash App</option>
                             <option value="Bank Transfer">Bank Transfer</option>
                         </>
                     ) : (
                         <>
-                            <option value="PayPal">PayPal (International)</option>
-                            <option value="CashApp">Cash App / Manual</option>
+                            <option value="PayPal">PayPal (USD)</option>
+                            <option value="Paystack">Paystack (International Card – USD)</option>
+                            <option value="CashApp">Cash App</option>
                             <option value="Bank Transfer">Bank Transfer</option>
                         </>
                     )}
