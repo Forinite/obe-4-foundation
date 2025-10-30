@@ -79,18 +79,21 @@ export default function DonationForm() {
     return (
         <form
             onSubmit={handleSubmit}
-            className="max-w-md mx-auto space-y-6 p-6 bg-white rounded-xl shadow-lg"
+            className="relative max-w-md mx-auto space-y-6 p-8 rounded-2xl bg-white/70 dark:bg-gray-900/50 shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-md border border-gray-200 dark:border-gray-700"
         >
-            {/* === CURRENCY SWITCHER – TOP & BOLD === */}
-            <div className="flex justify-center -mt-10 mb-6">
+            {/* === Decorative Glow Ring === */}
+            <div className="absolute -z-10 inset-0 rounded-2xl bg-gradient-to-r from-purple-600/10 via-cyan-500/10 to-purple-600/10 blur-xl" />
+
+            {/* === CURRENCY SWITCHER === */}
+            <div className="flex justify-center -mt-6 mb-6">
                 <div className="inline-flex items-center bg-gradient-to-r from-purple-600 to-cyan-500 p-1 rounded-full shadow-lg">
                     <button
                         type="button"
                         onClick={() => setCurrency('NGN')}
-                        className={`px-8 py-3 rounded-full text-lg font-bold transition-all ${
+                        className={`px-8 py-3 rounded-full text-lg font-semibold tracking-wide transition-all ${
                             currency === 'NGN'
                                 ? 'bg-white text-purple-700 shadow-md'
-                                : 'text-white hover:text-gray-200'
+                                : 'text-white/90 hover:text-white'
                         }`}
                     >
                         ₦ NGN
@@ -98,10 +101,10 @@ export default function DonationForm() {
                     <button
                         type="button"
                         onClick={() => setCurrency('USD')}
-                        className={`px-8 py-3 rounded-full text-lg font-bold transition-all ${
+                        className={`px-8 py-3 rounded-full text-lg font-semibold tracking-wide transition-all ${
                             currency === 'USD'
                                 ? 'bg-white text-purple-700 shadow-md'
-                                : 'text-white hover:text-gray-200'
+                                : 'text-white/90 hover:text-white'
                         }`}
                     >
                         $ USD
@@ -111,17 +114,19 @@ export default function DonationForm() {
 
             {/* === AMOUNT PRESETS === */}
             <div>
-                <label className="block text-sm font-medium text-gray-700">Amount</label>
-                <div className="flex flex-wrap gap-2 mt-2">
-                    {PRESETS[currency].map(val => (
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">
+                    Amount
+                </label>
+                <div className="flex flex-wrap gap-2">
+                    {PRESETS[currency].map((val) => (
                         <button
                             key={val}
                             type="button"
                             onClick={() => preset(val)}
-                            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                                 amount === val
-                                    ? 'bg-gradient-to-r from-purple-600 to-cyan-500 text-white shadow-md'
-                                    : 'bg-gray-100 hover:bg-gray-200'
+                                    ? 'bg-gradient-to-r from-purple-600 to-cyan-500 text-white shadow-md scale-105'
+                                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                             }`}
                         >
                             {formatCurrency(val)}
@@ -132,8 +137,10 @@ export default function DonationForm() {
                         min="1"
                         placeholder="Custom"
                         value={amount}
-                        onChange={e => setAmount(e.target.value ? Number(e.target.value) : '')}
-                        className="flex-1 min-w-[120px] px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
+                        onChange={(e) =>
+                            setAmount(e.target.value ? Number(e.target.value) : '')
+                        }
+                        className="flex-1 min-w-[120px] px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200"
                         required
                     />
                 </div>
@@ -141,11 +148,13 @@ export default function DonationForm() {
 
             {/* === PAYMENT METHOD === */}
             <div>
-                <label className="block text-sm font-medium text-gray-700">Payment Method</label>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">
+                    Payment Method
+                </label>
                 <select
                     value={paymentMethod}
-                    onChange={e => setPaymentMethod(e.target.value as PaymentMethod)}
-                    className="mt-1 w-full px-3 py-2 border rounded-lg"
+                    onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)}
+                    className="w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 >
                     {currency === 'NGN' ? (
                         <>
@@ -165,44 +174,46 @@ export default function DonationForm() {
             </div>
 
             {/* === NAME & EMAIL === */}
-            <input
-                placeholder="Full Name"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
-            />
-            <input
-                type="email"
-                placeholder="Email *"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
-                required
-            />
+            <div className="space-y-3">
+                <input
+                    placeholder="Full Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+                <input
+                    type="email"
+                    placeholder="Email *"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    required
+                />
+            </div>
 
             {/* === MESSAGE === */}
             <textarea
                 placeholder="Message (optional)"
                 value={message}
-                onChange={e => setMessage(e.target.value)}
+                onChange={(e) => setMessage(e.target.value)}
                 rows={3}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500"
+                className="w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
             />
 
             {/* === SUBMIT BUTTON === */}
             <button
                 type="submit"
                 disabled={loading || !csrfToken}
-                className={`
-          w-full py-4 rounded-lg font-bold text-white text-lg transition-all flex items-center justify-center gap-2
-          ${loading || !csrfToken
-                    ? 'bg-purple-400 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-700 hover:to-cyan-600 shadow-lg'
-                }
-        `}
+                className={`w-full py-4 rounded-lg font-semibold text-white text-lg transition-all flex items-center justify-center gap-2 ${
+                    loading || !csrfToken
+                        ? 'bg-purple-400 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-700 hover:to-cyan-600 shadow-lg'
+                }`}
             >
                 {loading ? (
-                    <>Processing… <Loader2 className="animate-spin w-5 h-5" /></>
+                    <>
+                        Processing… <Loader2 className="animate-spin w-5 h-5" />
+                    </>
                 ) : csrfToken ? (
                     'Donate Securely'
                 ) : (
@@ -211,10 +222,15 @@ export default function DonationForm() {
             </button>
 
             {status && (
-                <p className={`text-center text-sm mt-2 ${status.includes('Thank you') ? 'text-green-600' : 'text-red-600'}`}>
+                <p
+                    className={`text-center text-sm mt-2 ${
+                        status.includes('Thank you') ? 'text-green-600' : 'text-red-600'
+                    }`}
+                >
                     {status}
                 </p>
             )}
         </form>
+
     );
 }

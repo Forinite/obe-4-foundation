@@ -72,3 +72,39 @@ export const importantNotes = [
     'Email us at obefoundation4charity@gmail.com after donation',
     'Receipts and confirmations provided for all contributions',
 ];
+
+
+export const accountCards = [
+    {
+        bankName: 'Zenith Bank',
+        accountName: 'Dr. Obe Charity Foundation',
+        accountNumber: '1312584189',
+        gradient: 'from-red-500 via-gray-200 to-red-600',
+        textColor: 'text-red-600',
+        position: 'lg:left-0',
+    },
+    {
+        bankName: 'Bank of America',
+        accountName: 'Dr. Obe Charity Foundation',
+        accountNumber: '9159992005',
+        gradient: 'from-blue-500 via-gray-200 to-blue-600',
+        textColor: 'text-blue-600',
+        position: 'lg:right-8',
+    },
+    {
+        bankName: 'PayPal',
+        accountName: 'Dr. Obe Charity Foundation',
+        accountNumber: '@obecharity',
+        gradient: 'from-blue-800 via-gray-200 to-blue-900',
+        textColor: 'text-blue-900',
+        position: 'lg:left-8 lg:top-80',
+    },
+    {
+        bankName: 'CashApp',
+        accountName: 'Dr. Obe Charity Foundation',
+        accountNumber: '@obecharityfoundation',
+        gradient: 'from-orange-500 via-gray-200 to-orange-900',
+        textColor: 'text-orange-600',
+        position: 'lg:right-0 lg:top-80',
+    },
+];

@@ -25,11 +25,11 @@ export default function MissionStatementCard({ statement, index, onEdit, onDelet
                 <Sparkles className="w-4 h-4 animate-pulse-soft" />
             </div>
 
-            <p className="flex-1 text-neutral-800 dark:text-neutral-200 leading-relaxed font-medium">
+            <p className="flex-1 pt-6 text-neutral-800 dark:text-neutral-200 leading-relaxed font-medium">
                 {statement}
             </p>
 
-            <div className="flex items-center gap-3 ml-4 opacity-80 group-hover:opacity-100 transition-opacity duration-200">
+            <div className="absolute right-4  rounded-md flex items-center gap-3 ml-4 opacity-80 group-hover:opacity-100 transition-opacity duration-200">
                 <button
                     onClick={onEdit}
                     className="p-2 rounded-lg text-neutral-500 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-cyan-50/50 dark:hover:bg-cyan-500/10 transition-colors duration-200"

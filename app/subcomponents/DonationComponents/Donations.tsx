@@ -1,7 +1,8 @@
 //app/subcomponents/DonationComponents/Donations.tsx
 
 import {
-    donationHeader,
+    accountCards,
+    donationHeader, donationMethods,
     impactStats,
     importantNotes,
 } from '@/app/constants/donationData';
@@ -9,10 +10,12 @@ import DonationHeader from '@/app/subcomponents/DonationComponents/DonationHeade
 import ImpactCard from '@/app/subcomponents/DonationComponents/ImpactCard';
 import ImportantNote from '@/app/subcomponents/DonationComponents/ImportantNote';
 import DonationForm from '@/app/subcomponents/DonationComponents/DonationForm';
+import DonationMethodCard from "@/app/subcomponents/DonationComponents/DonationMethodCard";
+import AccountCard from "@/app/subcomponents/DonationComponents/AccountCard";
 
 const Donations: React.FC = () => {
     return (
-        <main className="relative z-20 flex-1">
+        <main className="relative z-20 max-w-screen overflow-hidden ">
             <div className="pt-32 px-4 sm:px-8 pb-20 select-none min-h-screen">
                 <div className="max-w-6xl mx-auto">
                     <DonationHeader />
@@ -28,11 +31,25 @@ const Donations: React.FC = () => {
                         ))}
                     </section>
 
-                    <section className="max-w-5xl mx-auto">
+                    <section className="relative max-w-5xl mx-auto">
                         <h2 className="text-2xl sm:text-3xl font-semibold mb-8 text-center text-cyan-400">
                             Choose Your Preferred Donation Method
                         </h2>
+
+                        <div className=" hidden lg:block">
+                            {accountCards.map((card, i) => (
+                                <AccountCard key={i} {...card} />
+                            ))}
+                        </div>
                         <DonationForm />
+
+                        <div className=" mt-4 grid md:grid-cols-2 gap-8 lg:hidden">
+                            {accountCards.map((card, i) => (
+                                <AccountCard key={i} {...card} />
+                            ))}
+                        </div>
+
+
                     </section>
 
                     <section className="mt-16 max-w-4xl mx-auto">

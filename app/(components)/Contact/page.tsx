@@ -42,13 +42,13 @@ export default async function Contact() {
         {
             icon: Clock,
             title: 'Open Hours',
-            subtitle: data.generalInfo.openDays.map((day: any) => `${day.day}: ${day.time}`).join(', '),
+            subtitle: data.generalInfo.openDays.map((day: any) => `${day.day}: ${day.time}`).join('\n, '),
             content: 'Our operating hours'
         }
     ];
 
     return (
-        <main className="relative flex-1 z-20 bg-gradient-to-b from-white via-purple-50/40 to-pink-50/40">
+        <main className="relative flex-1 max-w-screen overflow-hidden z-20 bg-gradient-to-b from-white via-purple-50/40 to-pink-50/40">
             {/* Subtle background decor */}
             <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-pink-200/40 rounded-full blur-3xl" />

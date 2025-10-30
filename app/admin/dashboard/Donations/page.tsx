@@ -1,3 +1,5 @@
+// app/admin/dashboard/Donations/page.tsx
+
 import React from 'react'
 import DonationsSection from "@/app/admin/dashboard/Donations/DonationsSection";
 

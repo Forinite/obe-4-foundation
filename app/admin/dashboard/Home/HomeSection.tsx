@@ -98,23 +98,23 @@ export default function HomeSection() {
     console.log(data.visionStatement)
     return (
         <>
-            <div className="space-y-12 animate-fadeIn">
+            <div className="space-y-12 animate-fadeIn max-w-screen">
                 {/* 🔥 MISSION STATEMENTS */}
                 <section className="p-6 bg-white/80 dark:bg-gray-900/50 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300">
-                    <div className="flex items-center justify-between mb-5">
-                        <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                    <div className="flex md:flex-row flex-col items-center justify-between mb-5">
+                        <h3 className="md:text-2xl text-lg font-semibold text-gray-800 dark:text-gray-100">
                             Mission Statements
                         </h3>
                         <button
                             onClick={openAddMission}
-                            className="flex items-center gap-2 text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300 px-3 py-1.5 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 hover:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all"
+                            className="flex items-center justify-center md:w-fit w-[60%] gap-2 text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300 px-3 py-1.5 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 hover:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all"
                         >
                             <Plus className="w-5 h-5" />
                             Add
                         </button>
                     </div>
                     {data.missionStatements?.length > 0 ? (
-                        <div className="space-y-4">
+                        <div className="space-y-4 text-sm">
                             {data.missionStatements.map((statement, index) => (
                                 <MissionStatementCard
                                     key={index}
@@ -166,7 +166,7 @@ export default function HomeSection() {
                 {/* 🔥 SERVICES */}
                 <section className="p-6 bg-white/80 dark:bg-gray-900/50 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300">
                     <div className="flex items-center justify-between mb-5">
-                        <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                        <h3 className=" text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-100">
                             Services
                         </h3>
                         <button

@@ -107,18 +107,17 @@ const ContactForm: React.FC<ContactFormProps> = ({ className }) => {
     return (
         <div
             className={cn(
-                'relative overflow-hidden bg-background/60 backdrop-blur-xl border border-cyan-400/20 rounded-2xl p-6 sm:p-8 shadow-lg transition-all duration-500 hover:border-cyan-400/40 hover:shadow-cyan-400/10',
+                'relative overflow-hidden bg-white/70 dark:bg-gray-900/60 backdrop-blur-2xl border border-cyan-400/10 rounded-2xl p-5 sm:p-8 shadow-lg transition-all duration-500 hover:border-cyan-400/30 hover:shadow-cyan-400/10',
                 className,
             )}
         >
             {/* 🌊 Animated Gradient Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-blue-600/10 animate-pulse" />
 
-            {/* 🧩 Floating Blobs */}
+            {/* Floating Blobs – reduced brightness on mobile */}
             <svg
-                className="absolute -top-20 -left-16 w-80 h-80 text-cyan-400/20 animate-[spin_40s_linear_infinite]"
+                className="absolute -top-20 -left-16 w-64 sm:w-80 h-64 sm:h-80 text-cyan-400/15 animate-[spin_40s_linear_infinite]"
                 viewBox="0 0 200 200"
-                xmlns="http://www.w3.org/2000/svg"
             >
                 <path
                     fill="currentColor"
@@ -128,9 +127,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ className }) => {
             </svg>
 
             <svg
-                className="absolute bottom-[-60px] right-[-40px] w-72 h-72 text-blue-500/10 animate-[spin_60s_reverse_linear_infinite]"
+                className="absolute bottom-[-60px] right-[-40px] w-56 sm:w-72 h-56 sm:h-72 text-blue-500/10 animate-[spin_60s_reverse_linear_infinite]"
                 viewBox="0 0 200 200"
-                xmlns="http://www.w3.org/2000/svg"
             >
                 <path
                     fill="currentColor"
@@ -139,11 +137,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ className }) => {
                 />
             </svg>
 
-            {/* ✨ Particles */}
+            {/* ✨ Floating Particles */}
             {particles.map((p) => (
                 <span
                     key={p.id}
-                    className="absolute rounded-full bg-cyan-400/40 blur-sm"
+                    className="absolute rounded-full bg-cyan-400/30 dark:bg-cyan-400/20 blur-sm"
                     style={{
                         top: `${p.top}%`,
                         left: `${p.left}%`,
@@ -154,23 +152,36 @@ const ContactForm: React.FC<ContactFormProps> = ({ className }) => {
                 />
             ))}
 
-            {/* 💡 CSS for custom keyframes */}
             <style jsx>{`
-                @keyframes float {
-                    0% { transform: translateY(0px) scale(1); opacity: 0.6; }
-                    50% { transform: translateY(-10px) scale(1.1); opacity: 1; }
-                    100% { transform: translateY(5px) scale(0.9); opacity: 0.6; }
-                }
-            `}</style>
+    @keyframes float {
+      0% {
+        transform: translateY(0px) scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translateY(-10px) scale(1.1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(5px) scale(0.9);
+        opacity: 0.6;
+      }
+    }
+  `}</style>
 
             {/* 🌠 Form Content */}
             <div className="relative z-10">
-                <h2 className="text-xl sm:text-2xl font-semibold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-5 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center sm:text-left">
                     Partner With Our Mission
                 </h2>
 
-                <form className="space-y-6" onSubmit={handleSubmit} noValidate>
-                    <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+                <form
+                    className="space-y-5 sm:space-y-6"
+                    onSubmit={handleSubmit}
+                    noValidate
+                >
+                    {/* Inputs */}
+                    <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                         <FormInput
                             id="firstName"
                             name="firstName"
@@ -213,7 +224,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ className }) => {
                     />
 
                     <div>
-                        <label htmlFor="message" className="block text-sm font-medium mb-2 cursor-default select-none">
+                        <label
+                            htmlFor="message"
+                            className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
+                        >
                             Message *
                         </label>
                         <textarea
@@ -221,24 +235,28 @@ const ContactForm: React.FC<ContactFormProps> = ({ className }) => {
                             name="message"
                             value={formData.message}
                             onChange={handleChange}
-                            rows={6}
-                            className="w-full px-4 py-3 bg-accent/50 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400 transition-all duration-300 resize-none cursor-text"
-                            placeholder="Tell us how you’d like to support our mission or get involved..."
+                            rows={5}
+                            className="w-full px-4 py-3 bg-white/50 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400 text-gray-800 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 transition-all duration-300 resize-none"
+                            placeholder="Tell us how you’d like to support our mission..."
                             required
                         />
                     </div>
 
-                    <div className="flex items-center space-x-3">
+                    {/* Privacy Checkbox */}
+                    <div className="flex items-start sm:items-center space-x-3">
                         <input
                             type="checkbox"
                             id="privacy"
                             name="privacy"
                             checked={formData.privacy}
                             onChange={handleChange}
-                            className="h-4 w-4 text-cyan-400 focus:ring-cyan-400/50 border-neutral-300 rounded cursor-pointer"
+                            className="h-5 w-5 text-cyan-400 focus:ring-cyan-400/50 border-gray-300 dark:border-gray-600 rounded cursor-pointer mt-1 sm:mt-0"
                             required
                         />
-                        <label htmlFor="privacy" className="text-sm text-foreground/70 cursor-pointer select-none">
+                        <label
+                            htmlFor="privacy"
+                            className="text-sm text-gray-700 dark:text-gray-300 leading-snug"
+                        >
                             I agree to the{' '}
                             <a href="/privacy" className="text-cyan-400 hover:underline">
                                 Privacy Policy
@@ -250,6 +268,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ className }) => {
                         </label>
                     </div>
 
+                    {/* Alerts */}
                     {error && (
                         <div
                             id="error-message"
@@ -267,11 +286,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ className }) => {
                         </div>
                     )}
 
+                    {/* Submit Button */}
                     <button
                         type="submit"
                         disabled={isSubmitting}
                         className={cn(
-                            'relative shimmer-button  overflow-hidden w-full sm:w-auto flex items-center justify-center space-x-2 px-8 py-3 rounded-lg text-white font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2',
+                            'relative overflow-hidden w-full flex items-center justify-center space-x-2 px-6 py-3 rounded-lg text-white font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2',
                             isSubmitting
                                 ? 'bg-cyan-400/50 cursor-wait'
                                 : 'bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 shadow-md shadow-cyan-400/20 hover:shadow-cyan-400/40',
@@ -279,17 +299,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ className }) => {
                     >
                         <Send className="h-4 w-4" aria-hidden="true" />
                         <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
-
-                        {/* Conditional shimmer animation */}
-                        {!isSubmitting && (
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 hover:opacity-40 animate-[shimmer_2s_linear_infinite]" />
-                        )}
                     </button>
-
-
                 </form>
             </div>
         </div>
+
     );
 };
 

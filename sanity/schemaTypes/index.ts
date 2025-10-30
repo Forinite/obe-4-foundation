@@ -13,6 +13,7 @@ import objective from './objects/objective';
 import approach from './objects/approach';
 import challengeItem from './objects/challengeItem';
 import donations from "@/sanity/schemaTypes/donations";
+import adminUser from "@/sanity/schemaTypes/adminUser";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -22,6 +23,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     donations,
     galleryImage,
     footer,
+    adminUser,
     link,
     openDay,
     service,

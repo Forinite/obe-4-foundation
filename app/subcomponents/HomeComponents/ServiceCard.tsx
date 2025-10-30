@@ -2,6 +2,7 @@
 'use client';
 import React, { useRef } from 'react';
 import CardParticles from "@/app/subcomponents/HomeComponents/CardParticles";
+import {renderIcon} from "@/lib/icons";
 
 interface ServiceCardProps {
     id: number;
@@ -50,7 +51,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ id, icon, title, description 
 
             {/* card content */}
             <div className="relative z-10">
-                <div className="text-4xl mb-3 text-sky-400 drop-shadow-md">{icon}</div>
+                <div className="text-4xl mb-3 text-sky-400 drop-shadow-md">{renderIcon(icon)}</div>
                 <h3 className="font-semibold mb-2 text-sky-300 text-lg md:text-xl tracking-wide">
                     {title}
                 </h3>

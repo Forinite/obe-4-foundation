@@ -23,10 +23,10 @@ const ContactHeader: React.FC<ContactHeaderProps> = ({ className }) => {
             </div>
 
             {/* Header text */}
-            <h1 className="text-3xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent tracking-tight">
+            <h1 className="text-3xl sm:text-5xl px-4 font-bold mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent tracking-tight">
                 Partner With Our Mission
             </h1>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg px-4 text-gray-600 max-w-2xl mx-auto leading-relaxed">
                 Join us in transforming rural healthcare across Nigeria. Whether you’re
                 looking to volunteer, donate, or collaborate, we’d love to hear from you.
             </p>

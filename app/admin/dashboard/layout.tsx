@@ -1,10 +1,11 @@
 // app/admin/dashboard/layout.tsx
 
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import {ReactNode} from "react";
+import AdminNavbar from "@/app/(components)/adminComponents/AdminNavbar";
+import {Metadata} from "next";
 
-
-import { ReactNode } from 'react';
-import { Metadata } from 'next';
-import AdminNavbar from '@/app/(components)/adminComponents/AdminNavbar';
 
 export const metadata: Metadata = {
     title: 'Admin | Dr. Obe Charity Foundation',
@@ -29,10 +30,14 @@ export const metadata: Metadata = {
     },
 };
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+
+export default async function AdminLayout({ children }: { children: ReactNode }) {
+    const session = await getServerSession();
+    if (!session) redirect('/admin/login');
+
     return (
         <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
-            <AdminNavbar />
+            <AdminNavbar user={session.user} />
             <main className="flex-1 lg:ml-64 transition-all duration-300 ease-in-out pt-16 lg:pt-0 p-6">
                 {children}
             </main>

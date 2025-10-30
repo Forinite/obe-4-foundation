@@ -1,6 +1,7 @@
 //app/subcomponents/AboutComponents/ChallengeCard.tsx
 'use client';
 import { useEffect, useState } from 'react';
+import {renderIcon} from "@/lib/icons";
 
 interface ChallengeCardProps {
     statistic: number;
@@ -15,7 +16,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({
                                                          subDescription,
                                                          items,
                                                      }) => {
-    const target = statistic
+    const target = statistic;
     const [value, setValue] = useState(0);
 
     useEffect(() => {
@@ -87,7 +88,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({
                         key={index}
                         className="flex flex-col items-center justify-center p-3 rounded-xl bg-gradient-to-br from-cyan-400/10 to-purple-500/10 hover:from-cyan-400/15 hover:to-purple-500/15 transition-all duration-300 border border-cyan-400/10"
                     >
-                        <div className="text-2xl mb-2 text-cyan-400">{item.icon}</div>
+                        <div className="text-2xl mb-2 text-cyan-400">{renderIcon(item.icon)}</div>
                         <p className="text-sm text-foreground/80">{item.text}</p>
                     </div>
                 ))}

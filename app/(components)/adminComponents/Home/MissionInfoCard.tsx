@@ -27,8 +27,8 @@ export default function MissionInfoCard({ data, onEdit, onDelete, onRefetch }: M
             transition={{ duration: 0.25 }}
             className="group relative p-6 rounded-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border border-gray-200/40 dark:border-gray-700/40 shadow-md hover:shadow-cyan-500/10 transition-all duration-300"
         >
-            <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-5">
+            <div className="flex  items-center justify-between mb-6">
+                <div className="flex md:flex-row flex-col items-center gap-5">
                     <div className="relative flex items-center justify-center w-20 h-20">
                         <svg className="w-20 h-20 transform -rotate-90">
                             <circle cx="40" cy="40" r={radius} stroke="currentColor" className="text-gray-200 dark:text-gray-700" strokeWidth="6" fill="transparent" />
@@ -45,14 +45,14 @@ export default function MissionInfoCard({ data, onEdit, onDelete, onRefetch }: M
                         </span>
                     </div>
                     <div>
-                        <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-100 tracking-wide">
+                        <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 tracking-wide">
                             {data.text}
                         </h4>
                         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Mission Objective Overview</p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3 opacity-80 group-hover:opacity-100 transition-opacity">
+                <div className="flex absolute right-2 top-4 items-center gap-3 opacity-80 group-hover:opacity-100 transition-opacity">
                     <button
                         onClick={onEdit}
                         className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-cyan-600/20 text-cyan-500 hover:text-cyan-300 transition-colors"
@@ -73,7 +73,7 @@ export default function MissionInfoCard({ data, onEdit, onDelete, onRefetch }: M
                     <li key={index} className="flex items-center justify-between bg-gray-100/70 dark:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-700/40 rounded-lg px-4 py-2 transition-all duration-200">
                         <div className="flex items-center gap-3 text-gray-700 dark:text-gray-200">
                             <span className="text-cyan-500"><Target className="w-4 h-4" /></span>
-                            <span className="text-sm font-medium">{item}</span>
+                            <span className="text-xs font-medium">{item}</span>
                         </div>
                         <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-cyan-400 transition-colors" />
                     </li>

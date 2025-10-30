@@ -1,5 +1,7 @@
 // app/subcomponents/AboutComponents/ObjectiveCard.tsx
 
+import {renderIcon} from "@/lib/icons";
+
 interface ObjectiveCardProps {
     icon: string;
     title: string;
@@ -15,7 +17,7 @@ const ObjectiveCard: React.FC<ObjectiveCardProps> = ({ icon, title, items }) => 
             {/* Header */}
             <div className="relative flex items-center mb-5">
                 <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-purple-400 text-white text-2xl shadow-md">
-                    {icon}
+                    {renderIcon(icon)}
                 </div>
                 <h3 className="ml-4 text-lg md:text-xl font-semibold text-purple-700 tracking-wide">
                     {title}

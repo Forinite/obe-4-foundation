@@ -11,7 +11,13 @@ import {
     LayoutGrid,
     Menu,
     ChevronLeft,
+    UserIcon,
 } from 'lucide-react';
+
+import { signOut } from 'next-auth/react';
+
+
+
 
 const links = [
     { href: '/admin/dashboard/Home', label: 'Home', icon: LayoutDashboard },
@@ -19,6 +25,7 @@ const links = [
     { href: '/admin/dashboard/Contact', label: 'Contact', icon: Phone },
     { href: '/admin/dashboard/Gallery', label: 'Gallery', icon: Image },
     { href: '/admin/dashboard/Footer', label: 'Footer', icon: LayoutGrid },
+    { href: '/admin/dashboard/Admins', label: 'Admins', icon: UserIcon },
 ];
 
 const AdminNavbar = () => {
@@ -82,6 +89,12 @@ const AdminNavbar = () => {
                                 </Link>
                             </li>
                         ))}
+                        <button
+                            onClick={() => signOut({ callbackUrl: '/admin/login' })}
+                            className="text-red-600 hover:text-red-800"
+                        >
+                            Logout
+                        </button>
                     </ul>
                 </nav>
 
