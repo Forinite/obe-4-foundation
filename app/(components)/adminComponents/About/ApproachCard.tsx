@@ -29,7 +29,7 @@ export default function ApproachCard({ approach, index, onEdit, onDelete, onRefe
                         {renderIcon(approach.icon)}
                     </div>
                     <div>
-                        <h4 className="text-lg font-semibold text-white">{approach.title}</h4>
+                        <h4 className="md:text-lg text-sm font-semibold text-white">{approach.title}</h4>
                         <p className="text-xs text-gray-400">#{index + 1} Approach</p>
                     </div>
                 </div>
@@ -40,19 +40,19 @@ export default function ApproachCard({ approach, index, onEdit, onDelete, onRefe
                         className="p-2 rounded-lg bg-gray-800/70 hover:bg-cyan-600/20 text-cyan-400 hover:text-cyan-300 transition-colors"
                         aria-label={`Edit approach ${approach.title}`}
                     >
-                        <Edit3 className="w-5 h-5" />
+                        <Edit3 className="md:w-5 md:h-5 w-4 h-4" />
                     </button>
                     <button
                         onClick={onDelete}  // 🔥 CALLBACK
                         className="p-2 rounded-lg bg-gray-800/70 hover:bg-red-600/20 text-red-400 hover:text-red-300 transition-colors"
                         aria-label={`Delete approach ${approach.title}`}
                     >
-                        <Trash2 className="w-5 h-5" />
+                        <Trash2 className="md:w-5 md:h-5 w-4 h-4" />
                     </button>
                 </div>
             </div>
 
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-gray-300 md:text-base text-sm leading-relaxed">
                 {approach.description}
             </p>
 

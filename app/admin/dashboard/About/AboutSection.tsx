@@ -136,7 +136,7 @@ export default function AboutSection() {
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2">
                             <Sparkles className="w-5 h-5 text-fuchsia-500 animate-pulse" />
-                            <h3 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+                            <h3 className="text-lg md:text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
                                 Challenge Data
                             </h3>
                         </div>
@@ -166,7 +166,7 @@ export default function AboutSection() {
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2">
                             <Sparkles className="w-5 h-5 text-cyan-500 animate-pulse" />
-                            <h3 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+                            <h3 className="text-lg md:text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
                                 Objectives
                             </h3>
                         </div>
@@ -175,7 +175,7 @@ export default function AboutSection() {
                             className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-cyan-500 to-sky-400 text-white hover:opacity-90 transition-opacity duration-200 shadow-md"
                         >
                             <PlusCircle className="w-4 h-4" />
-                            <span>Add Objective</span>
+                            <span>Add</span>
                         </button>
                     </div>
 
@@ -209,7 +209,7 @@ export default function AboutSection() {
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2">
                             <Sparkles className="w-5 h-5 text-emerald-500 animate-pulse" />
-                            <h3 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+                            <h3 className="text-lg md:text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
                                 Approach
                             </h3>
                         </div>
@@ -218,7 +218,7 @@ export default function AboutSection() {
                             className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-emerald-500 to-teal-400 text-white hover:opacity-90 transition-opacity duration-200 shadow-md"
                         >
                             <PlusCircle className="w-4 h-4" />
-                            <span>Add Approach</span>
+                            <span>Add </span>
                         </button>
                     </div>
 

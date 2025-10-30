@@ -21,16 +21,16 @@ export default function ServiceCard({ service, index, onEdit, onDelete, onRefetc
 
             <div className="relative z-10 flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="relative w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-500/10 to-purple-500/10 text-white shadow-lg shadow-cyan-500/20 group-hover:scale-105 group-hover:shadow-cyan-400/30 transition-all duration-300">
+                    <div className="relative min-w-12 w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-500/10 to-purple-500/10 text-white shadow-lg shadow-cyan-500/20 group-hover:scale-105 group-hover:shadow-cyan-400/30 transition-all duration-300">
                         <div className="w-6 h-6">{renderIcon(service.icon)}</div>
                         <span className="absolute inset-0 rounded-xl bg-gradient-to-tr from-cyan-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300"></span>
                     </div>
-                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 tracking-wide group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300">
+                    <h4 className="text-base font-semibold text-gray-800 dark:text-gray-100 tracking-wide group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300">
                         {service.title}
                     </h4>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 md:relative md:top-0 md:right-0 absolute top-0 right-0 ">
                     <button
                         onClick={onEdit}
                         className="text-gray-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200 hover:scale-110"
@@ -46,7 +46,7 @@ export default function ServiceCard({ service, index, onEdit, onDelete, onRefetc
                 </div>
             </div>
 
-            <p className="mt-4 text-gray-700 dark:text-gray-300 leading-relaxed group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors duration-300">
+            <p className="mt-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors duration-300">
                 {service.description}
             </p>
         </div>

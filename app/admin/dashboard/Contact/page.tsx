@@ -14,8 +14,8 @@ export default async function ContactDashboard() {
             {/*<AdminNavbar />*/}
 
             {/* Main Content */}
-            <main className="flex-1 p-8">
-                <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">Contact Dashboard</h2>
+            <main className="flex-1 md:p-8">
+                <h2 className="text-xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">Contact Dashboard</h2>
                 <ContactSection data={contactData} />
             </main>
         </div>

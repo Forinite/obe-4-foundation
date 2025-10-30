@@ -69,20 +69,20 @@ export default function ContactSection() {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="p-2 rounded-full bg-cyan-100 dark:bg-cyan-900/40 text-cyan-600 dark:text-cyan-400">
-                                <Info className="w-5 h-5" />
+                                <Info className="md:w-5 md:h-5 w-4 h-4 " />
                             </div>
-                            <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">General Info</h3>
+                            <h3 className="text-lg md:text-2xl font-semibold text-gray-800 dark:text-gray-100">General Info</h3>
                         </div>
                         <button
                             onClick={openEditGeneralInfo}
-                            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium transition-transform hover:scale-105 shadow-sm"
+                            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white md:text-sm text-xs font-medium transition-transform hover:scale-105 shadow-sm"
                         >
                             <Plus className="w-4 h-4" />
-                            <span>Edit Info</span>
+                            <span>Edit <span className={'md:inline hidden'}> Info</span></span>
                         </button>
                     </div>
 
-                    <div className="bg-white/70 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl shadow-sm p-6 hover:shadow-md transition-all duration-300">
+                    <div className="bg-white/70 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl shadow-sm md:p-6 hover:shadow-md transition-all duration-300">
                         <GeneralInfoCard
                             data={data.generalInfo}
                             onEdit={openEditGeneralInfo}
@@ -103,11 +103,11 @@ export default function ContactSection() {
                             <div className="p-2 rounded-full bg-cyan-100 dark:bg-cyan-900/40 text-cyan-600 dark:text-cyan-400">
                                 <MessageSquare className="w-5 h-5" />
                             </div>
-                            <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">FAQs</h3>
+                            <h3 className="text-lg md:text-2xl font-semibold text-gray-800 dark:text-gray-100">FAQs</h3>
                         </div>
                         <button
                             onClick={openAddFAQ}
-                            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium transition-transform hover:scale-105 shadow-sm"
+                            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white md:text-sm text-xs font-medium transition-transform hover:scale-105 shadow-sm"
                         >
                             <Plus className="w-4 h-4" />
                             <span>Add FAQ</span>

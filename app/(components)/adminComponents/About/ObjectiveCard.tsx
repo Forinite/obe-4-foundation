@@ -31,11 +31,11 @@ export default function ObjectiveCard({ objective, index, onEdit, onDelete, onRe
                     <div className="flex items-center justify-center min-w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-500/20 to-cyan-500/20 text-fuchsia-600 dark:text-cyan-400 group-hover:scale-110 transition-transform duration-300">
                         {renderIcon(objective.icon)}
                     </div>
-                    <h4 className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 tracking-tight">
+                    <h4 className="md:text-lg text-base font-semibold text-neutral-800 dark:text-neutral-100 tracking-tight">
                         {objective.title}
                     </h4>
                 </div>
-                <div className="flex gap-3 text-neutral-500 dark:text-neutral-400">
+                <div className="flex md:relative md:top-0 -top-4 right-0 absolute gap-3 text-neutral-500 dark:text-neutral-400">
                     <button
                         onClick={onEdit}  // 🔥 CALLBACK
                         aria-label={`Edit objective ${objective.title}`}
@@ -53,7 +53,7 @@ export default function ObjectiveCard({ objective, index, onEdit, onDelete, onRe
                 </div>
             </div>
 
-            <ul className="relative z-10 list-disc pl-5 space-y-1 text-neutral-700 dark:text-neutral-300 leading-relaxed">
+            <ul className="relative z-10 md:text-base text-sm list-disc pl-5 space-y-1 text-neutral-700 dark:text-neutral-300 leading-relaxed">
                 {objective.items.map((item, i) => (
                     <li
                         key={i}

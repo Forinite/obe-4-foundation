@@ -3,7 +3,7 @@
 'use client';
 
 import React from 'react';
-import { Info, Eye } from 'lucide-react';
+import {Info, Eye, PencilLine} from 'lucide-react';
 
 interface VisionStatement {
     title: string;
@@ -28,18 +28,19 @@ export default function VisionStatementCard({ data, onEdit }: VisionStatementCar
 
             {/* Header */}
             <div className="relative z-10 flex items-center justify-between mb-6">
+
                 <div className="flex items-center gap-3">
                     <div className="p-2 rounded-full bg-emerald-400/10 text-emerald-500">
-                        <Eye className="w-5 h-5" />
+                        <Eye className="md:w-5 md:h-5 w-4 h-4" />
                     </div>
-                    <h3 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-emerald-400 to-cyan-500 bg-clip-text text-transparent">
+                    <h3 className="text-lg md:text-2xl font-bold tracking-tight bg-gradient-to-r from-emerald-400 to-cyan-500 bg-clip-text text-transparent">
                         Vision Statement
                     </h3>
                 </div>
 
                 <button
                     onClick={onEdit}
-                    className="relative flex items-center gap-2 text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 px-4 py-2 rounded-lg border border-emerald-500/30 hover:border-emerald-400/60 hover:shadow-[0_0_10px_rgba(16,185,129,0.3)] transition-all duration-300"
+                    className="relative flex items-center gap-2 ml-2 text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 px-4 py-2 rounded-lg border border-emerald-500/30 hover:border-emerald-400/60 hover:shadow-[0_0_10px_rgba(16,185,129,0.3)] transition-all duration-300"
                 >
                     Edit
                 </button>
