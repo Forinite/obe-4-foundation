@@ -148,30 +148,58 @@ export default function DonationForm() {
 
             {/* === PAYMENT METHOD === */}
             <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">
                     Payment Method
                 </label>
-                <select
-                    value={paymentMethod}
-                    onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)}
-                    className="w-full px-4 py-3 border rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                >
-                    {currency === 'NGN' ? (
-                        <>
-                            <option value="Paystack">Paystack (Card / Bank – NGN)</option>
-                            <option value="CashApp">Cash App</option>
-                            <option value="Bank Transfer">Bank Transfer</option>
-                        </>
-                    ) : (
-                        <>
-                            <option value="PayPal">PayPal (USD)</option>
-                            <option value="Paystack">Paystack (International Card – USD)</option>
-                            <option value="CashApp">Cash App</option>
-                            <option value="Bank Transfer">Bank Transfer</option>
-                        </>
-                    )}
-                </select>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {(
+                        currency === "NGN"
+                            ? [
+                                { id: "Paystack", label: "Paystack", desc: "Card / Bank – NGN" },
+                                { id: "CashApp", label: "Cash App", desc: "Instant mobile transfer" },
+                                { id: "Bank Transfer", label: "Bank Transfer", desc: "Manual confirmation" },
+                            ]
+                            : [
+                                { id: "PayPal", label: "PayPal", desc: "Pay securely in USD" },
+                                { id: "Paystack", label: "Paystack", desc: "Intl. card – USD" },
+                                { id: "CashApp", label: "Cash App", desc: "Mobile transfer" },
+                                { id: "Bank Transfer", label: "Bank Transfer", desc: "Manual confirmation" },
+                            ]
+                    ).map((method) => (
+                        <label
+                            key={method.id}
+                            className={`relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all ${
+                                paymentMethod === method.id
+                                    ? "border-transparent bg-gradient-to-r from-purple-600 to-cyan-500 text-white shadow-lg scale-[1.02]"
+                                    : "border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-gray-900/50 hover:border-purple-400 dark:hover:border-purple-500"
+                            }`}
+                        >
+                            <input
+                                type="radio"
+                                name="paymentMethod"
+                                value={method.id}
+                                checked={paymentMethod === method.id}
+                                onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)}
+                                className="hidden"
+                            />
+                            <div className="flex justify-between items-center">
+                                <span className="font-semibold text-base">{method.label}</span>
+                                {paymentMethod === method.id && (
+                                    <span className="w-5 h-5 rounded-full bg-white border-4 border-purple-700 shadow-inner"></span>
+                                )}
+                            </div>
+                            <p
+                                className={`mt-1 text-sm ${
+                                    paymentMethod === method.id ? "text-white/90" : "text-gray-500 dark:text-gray-400"
+                                }`}
+                            >
+                                {method.desc}
+                            </p>
+                        </label>
+                    ))}
+                </div>
             </div>
+
 
             {/* === NAME & EMAIL === */}
             <div className="space-y-3">

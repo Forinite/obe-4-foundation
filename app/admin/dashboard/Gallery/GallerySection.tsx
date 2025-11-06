@@ -41,11 +41,11 @@ export default function GallerySection() {
             <div className="space-y-8">
                 <div>
                     <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-2xl mt-8 ml-2 font-semibold text-gray-800 dark:text-gray-100">
+                        <h3 className="text-lg md:text-2xl mt-8 ml-2 font-semibold text-gray-800 dark:text-gray-100">
                             Gallery Images ({images?.length || 0})
                         </h3>
 
-                        <div className="flex items-center gap-4">
+                        <div className="flex  items-center gap-4 md:text-base text-sm" >
                             {selectedIds.length > 0 && (
                                 <button
                                     onClick={openBatchDeleteModal}
@@ -64,6 +64,16 @@ export default function GallerySection() {
                             </button>
                         </div>
                     </div>
+
+                    {selectedIds.length > 0 && (
+                        <button
+                            onClick={openBatchDeleteModal}
+                            className=" fixed z-20 top-16 bg-white/60 p-2 rounded-md flex items-center gap-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors"
+                        >
+                            <Trash2 className="w-5 h-5" />
+                             ({selectedIds.length})
+                        </button>
+                    )}
 
                     {images?.length ? (
                         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">

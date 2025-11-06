@@ -12,15 +12,19 @@ import ImportantNote from '@/app/subcomponents/DonationComponents/ImportantNote'
 import DonationForm from '@/app/subcomponents/DonationComponents/DonationForm';
 import DonationMethodCard from "@/app/subcomponents/DonationComponents/DonationMethodCard";
 import AccountCard from "@/app/subcomponents/DonationComponents/AccountCard";
+import ScatteredImages from "@/app/subcomponents/DonationComponents/ScatteredImages";
 
 const Donations: React.FC = () => {
     return (
         <main className="relative z-20 max-w-screen overflow-hidden ">
             <div className="pt-32 px-4 sm:px-8 pb-20 select-none min-h-screen">
                 <div className="max-w-6xl mx-auto">
-                    <DonationHeader />
+                    <div className=" relative flex flex-col items-center justify-center  z-10 my-12 min-h-[400px] my-[100px]" >
+                        <DonationHeader />
+                        <ScatteredImages />
+                    </div>
 
-                    <section className="grid md:grid-cols-3 gap-6 mt-12 mb-8">
+                    <section className="grid md:grid-cols-3 gap-6 mt-40 mb-8">
                         {impactStats.map((stat, i) => (
                             <ImpactCard
                                 key={i}
@@ -32,7 +36,7 @@ const Donations: React.FC = () => {
                     </section>
 
                     <section className="relative max-w-5xl mx-auto">
-                        <h2 className="text-2xl sm:text-3xl font-semibold mb-8 text-center text-cyan-400">
+                        <h2 className="text-2xl sm:text-3xl font-semibold  my-20 text-center text-cyan-400">
                             Choose Your Preferred Donation Method
                         </h2>
 

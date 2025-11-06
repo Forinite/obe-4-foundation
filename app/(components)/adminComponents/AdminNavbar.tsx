@@ -24,7 +24,7 @@ const links = [
     { href: '/admin/dashboard/About', label: 'About', icon: Info },
     { href: '/admin/dashboard/Contact', label: 'Contact', icon: Phone },
     { href: '/admin/dashboard/Gallery', label: 'Gallery', icon: Image },
-    { href: '/admin/dashboard/Footer', label: 'Footer', icon: LayoutGrid },
+    { href: '/admin/dashboard/Donations', label: 'Donations', icon: LayoutGrid },
     { href: '/admin/dashboard/Admins', label: 'Admins', icon: UserIcon },
 ];
 
