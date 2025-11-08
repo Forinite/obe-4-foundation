@@ -7,7 +7,7 @@ interface VisionCardProps {
 }
 
 export default function VisionCard({
-                                       visionStatement = { title: 'No Title', description: 'No vision statement available.', goals: [] }
+                                       visionStatement = { title: 'No Title', mainStatement: 'No vision statement available.', goals: [] }
                                    }: VisionCardProps) {
     console.log(visionStatement);
 
@@ -32,7 +32,7 @@ export default function VisionCard({
 
                 {/* Description */}
                 <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                    {visionStatement.description}
+                    {visionStatement.mainStatement}
                 </p>
 
                 {/* Sub highlight */}

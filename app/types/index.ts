@@ -35,7 +35,7 @@ export interface ChallengeItem {
 
 export interface VisionStatement {
     title: string;
-    description: string;
+    mainStatement: string;
     goals: string[];
 }
 
