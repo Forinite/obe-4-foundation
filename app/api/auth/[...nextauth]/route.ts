@@ -38,12 +38,12 @@ const handler = NextAuth({
         maxAge: 60 * 60 * 8, // 8 hours
     },
     callbacks: {
-        async jwt({ token, user }) {
-            if (user) token.id = user.id;
+        async jwt({ token }) {
+            // Don't store id in token
             return token;
         },
-        async session({ session, token }) {
-            if (token?.id) session.user.id = token.id as string;
+        async session({ session }) {
+            // Return session as-is, no id
             return session;
         },
     },
@@ -51,3 +51,9 @@ const handler = NextAuth({
 });
 
 export { handler as GET, handler as POST };
+
+
+
+
+// app/api/auth/[...nextauth]/route.ts
+
