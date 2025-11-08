@@ -9,7 +9,7 @@ import { renderIcon } from '@/lib/icons';
 
 interface ChallengeDataCardProps {
     data: {
-        statistic: string;
+        statistic: number;
         description: string;
         subDescription: string;
         items: { icon: string; text: string }[];
