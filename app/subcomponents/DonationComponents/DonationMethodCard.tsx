@@ -1,12 +1,12 @@
 //app/subcomponents/DonationComponents/DonationMethodCard.tsx
-
 import { cn } from '@/lib/utils';
 import CopyButton from './CopyButton';
+import React from 'react';
 
 interface DonationMethodCardProps {
     title: string;
     subtitle: string;
-    icon: React.ComponentType | React.ReactNode;
+    icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>; // ✅ typed as Lucide-style SVG component
     gradient: string;
     details: { label: string; value: string }[];
     className?: string;
@@ -30,7 +30,7 @@ const DonationMethodCard: React.FC<DonationMethodCardProps> = ({
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-4">
                     <div className={`p-3 rounded-full bg-gradient-to-r ${gradient} text-white shadow-lg`}>
-                        {Icon ? <Icon className="h-6 w-6" aria-hidden="true" /> : " "}
+                        {Icon && <Icon className="h-6 w-6" aria-hidden="true" />}
                     </div>
                     <div>
                         <h3 className="text-xl font-semibold text-foreground">{title}</h3>

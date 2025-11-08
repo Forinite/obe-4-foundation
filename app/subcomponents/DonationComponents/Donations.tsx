@@ -2,7 +2,6 @@
 
 import {
     accountCards,
-    donationHeader, donationMethods,
     impactStats,
     importantNotes,
 } from '@/app/constants/donationData';
@@ -10,7 +9,6 @@ import DonationHeader from '@/app/subcomponents/DonationComponents/DonationHeade
 import ImpactCard from '@/app/subcomponents/DonationComponents/ImpactCard';
 import ImportantNote from '@/app/subcomponents/DonationComponents/ImportantNote';
 import DonationForm from '@/app/subcomponents/DonationComponents/DonationForm';
-import DonationMethodCard from "@/app/subcomponents/DonationComponents/DonationMethodCard";
 import AccountCard from "@/app/subcomponents/DonationComponents/AccountCard";
 import ScatteredImages from "@/app/subcomponents/DonationComponents/ScatteredImages";
 
