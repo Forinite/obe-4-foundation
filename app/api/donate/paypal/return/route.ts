@@ -2,8 +2,9 @@
 
 import { NextResponse } from 'next/server';
 import { client } from '@/lib/sanity';
-import { getAccessToken } from './route'; // ← Now works
+
 import { sendDonorEmail, sendAdminNotification } from '@/lib/email';
+import {getAccessToken} from "@/app/api/donate/paypal/route";
 
 export async function GET(req: Request) {
     const url = new URL(req.url);
