@@ -36,7 +36,7 @@ export async function sendDonorEmail({
     <div style="max-width:600px; margin:auto; background:#ffffff; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06); overflow:hidden;">
       
       <div style="background:linear-gradient(135deg,#7e5bef,#e26af9); color:white; text-align:center; padding:40px 20px;">
-        <img src="https://i.imgur.com/9Pfj9tT.png" alt="Dr. Obe Foundation" style="width:80px; height:auto; margin-bottom:16px;" />
+        <img src="/public/company-logo.webp" alt="Dr. Obe Foundation" style="width:80px; height:auto; margin-bottom:16px;" />
         <h1 style="margin:0; font-size:26px; letter-spacing:0.5px;">Thank You for Your Donation!</h1>
       </div>
 
