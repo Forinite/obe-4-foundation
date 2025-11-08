@@ -5,12 +5,13 @@
 import React from 'react';
 import {Info, Eye, PencilLine} from 'lucide-react';
 
-interface VisionStatement {
-    title: string;
-    mainStatement: string;
-    highlight: string;
-    goals: string[];
+export interface VisionStatement {
+    title?: string;
+    mainStatement?: string;
+    highlight?: string;
+    goals?: string[];
 }
+
 
 interface VisionStatementCardProps {
     data?: VisionStatement;

@@ -6,11 +6,11 @@ import Modal from '@/app/admin/components/Modal';
 import { updateVisionStatement } from '@/app/actions/home';
 // import { toast } from '@/lib/toast';
 
-interface VisionStatement {
-    title: string;
-    mainStatement: string;
-    highlight: string;
-    goals: string[];
+export interface VisionStatement {
+    title?: string;
+    mainStatement?: string;
+    highlight?: string;
+    goals?: string[];
 }
 
 interface UpdateVisionStatementModalProps {

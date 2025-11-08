@@ -37,7 +37,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
 
     return (
         <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
-            <AdminNavbar user={session.user} />
+            <AdminNavbar />
             <main className="flex-1 lg:ml-64 transition-all duration-300 ease-in-out pt-16 lg:pt-0 md:p-6 p-4">
                 {children}
             </main>

@@ -128,7 +128,7 @@ export default function ContactSection() {
                                     index={index}
                                     onEdit={() => openEditFAQ(index, faq)}
                                     onDelete={() => openDeleteFAQ(index)}
-                                    onRefetch={handleSuccess}
+                                    // onRefetch={handleSuccess}
                                 />
                             </motion.div>
                         ))}
