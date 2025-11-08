@@ -1,23 +1,27 @@
 // app/(components)/donate/page.tsx
 
-
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function DonateResultPage() {
-    const params = useSearchParams();
-    const status = params.get('status');
-    const reference = params.get('reference') ?? params.get('ref');
+    const [status, setStatus] = useState<string | null>(null);
+    const [reference, setReference] = useState<string | null>(null);
     const [msg, setMsg] = useState<string | null>(null);
 
+    // Read query parameters on the client
     useEffect(() => {
-        if (status === 'success') setMsg(`Thank you! Your donation was successful. Ref: ${reference}`);
-        else if (status === 'error') setMsg('Something went wrong. Please try again.');
+        const params = new URLSearchParams(window.location.search);
+        const s = params.get('status');
+        const r = params.get('reference') ?? params.get('ref');
+        setStatus(s);
+        setReference(r);
+
+        if (s === 'success') setMsg(`Thank you! Your donation was successful. Ref: ${r}`);
+        else if (s === 'error') setMsg('Something went wrong. Please try again.');
         else setMsg(null);
-    }, [status, reference]);
+    }, []);
 
     if (status === 'success')
         return (
