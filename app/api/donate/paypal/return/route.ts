@@ -1,10 +1,8 @@
 //app/api/donate/paypal/return/route.ts
-
 import { NextResponse } from 'next/server';
 import { client } from '@/lib/sanity';
-
 import { sendDonorEmail, sendAdminNotification } from '@/lib/email';
-import {getAccessToken} from "@/app/api/donate/paypal/route";
+import { getAccessToken } from '@/lib/paypal'; // ✅ import from helper
 
 export async function GET(req: Request) {
     const url = new URL(req.url);
@@ -27,8 +25,7 @@ export async function GET(req: Request) {
             const amount = Number(purchase.payments.captures[0].amount.value);
             const transactionId = purchase.payments.captures[0].id;
 
-            await client
-                .patch(existing._id)
+            await client.patch(existing._id)
                 .set({
                     amount,
                     status: 'completed',
@@ -37,7 +34,14 @@ export async function GET(req: Request) {
                 })
                 .commit();
 
-            await sendDonorEmail({ to: existing.donorEmail, name: existing.donorName, amount, currency: 'USD', transactionId });
+            await sendDonorEmail({
+                to: existing.donorEmail,
+                name: existing.donorName,
+                amount,
+                currency: 'USD',
+                transactionId,
+            });
+
             await sendAdminNotification({
                 to: process.env.ADMIN_EMAIL!,
                 donorName: existing.donorName,
@@ -50,9 +54,7 @@ export async function GET(req: Request) {
 
             return NextResponse.redirect(`${process.env.APP_URL}/donate?status=success&ref=${transactionId}`);
         } else {
-            // MARK AS FAILED
-            await client
-                .patch(existing._id)
+            await client.patch(existing._id)
                 .set({
                     status: 'failed',
                     metadata: { error: JSON.stringify(capture) },
