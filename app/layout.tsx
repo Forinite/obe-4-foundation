@@ -26,6 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+    <script src="https://kit.cash.app/v1/pay.js" async />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased selection:text-foreground selection:bg-purple-300/20`}
       >

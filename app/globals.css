@@ -77,3 +77,42 @@ body {
   background-size: 200% 100%;
   animation: shimmer 2s infinite linear;
 }
+
+
+/* === Fade In Down === */
+@keyframes fadeInDown {
+  0% { opacity: 0; transform: translateY(-120px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInDown { animation: fadeInDown 1s ease-out forwards; }
+
+/* === Shimmer === */
+@keyframes shimmer {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+.animate-shimmer { animation: shimmer 6s linear infinite; }
+
+/* === Orb Orbits === */
+@keyframes orbA { 0%,100% { transform: translate(0,0); } 50% { transform: translate(100px,-100px); } }
+.animate-orbA { animation: orbA 20s ease-in-out infinite; }
+
+@keyframes orbB { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-80px,100px); } }
+.animate-orbB { animation: orbB 18s ease-in-out infinite; }
+
+/* === Floating Particles === */
+@keyframes floatY { 0%,100% { transform: translateY(0); opacity: 0.3; } 50% { transform: translateY(-30px); opacity: 1; } }
+.animate-floatY { animation: floatY 3s ease-in-out infinite; }
+
+/* === Rotate 360 === */
+@keyframes rotate360 { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.animate-rotate360 { animation: rotate360 20s linear infinite; }
+.animate-rotate360slow { animation: rotate360 25s linear infinite reverse; }
+
+/* === Pulse Scale === */
+@keyframes pulseScale { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+.animate-pulseScale { animation: pulseScale 1.5s ease-in-out infinite; }
+
+/* === Fade In === */
+@keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+.animate-fadeIn { animation: fadeIn 1s ease-out forwards; }

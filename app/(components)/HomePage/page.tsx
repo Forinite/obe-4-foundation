@@ -47,13 +47,13 @@ export default async function HomePage() {
 
                 <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
                     <Link
-                        href="/donations"
+                        href="/Donations"
                         className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-8 py-3 rounded-full font-semibold shadow-lg shadow-cyan-400/20 hover:scale-105 transition-transform"
                     >
                         💙 Support Our Mission
                     </Link>
                     <Link
-                        href="/about"
+                        href="/About"
                         className="border border-cyan-400/50 text-cyan-400 px-8 py-3 rounded-full font-semibold hover:bg-cyan-400/10 transition-all"
                     >
                         Learn More
