@@ -16,7 +16,7 @@ const PRESETS = {
 };
 
 export default function DonationForm() {
-    const [currency, setCurrency] = useState<Currency>('NGN');
+    const [currency, setCurrency] = useState<Currency>('USD');
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('Paystack');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -87,17 +87,17 @@ export default function DonationForm() {
             {/* === CURRENCY SWITCHER === */}
             <div className="flex justify-center -mt-6 mb-6">
                 <div className="inline-flex items-center bg-gradient-to-r from-purple-600 to-cyan-500 p-1 rounded-full shadow-lg">
-                    <button
-                        type="button"
-                        onClick={() => setCurrency('NGN')}
-                        className={`px-8 py-3 rounded-full text-lg font-semibold tracking-wide transition-all ${
-                            currency === 'NGN'
-                                ? 'bg-white text-purple-700 shadow-md'
-                                : 'text-white/90 hover:text-white'
-                        }`}
-                    >
-                        ₦ NGN
-                    </button>
+                    {/*<button*/}
+                    {/*    type="button"*/}
+                    {/*    onClick={() => setCurrency('NGN')}*/}
+                    {/*    className={`px-8 py-3 rounded-full text-lg font-semibold tracking-wide transition-all ${*/}
+                    {/*        currency === 'NGN'*/}
+                    {/*            ? 'bg-white text-purple-700 shadow-md'*/}
+                    {/*            : 'text-white/90 hover:text-white'*/}
+                    {/*    }`}*/}
+                    {/*>*/}
+                    {/*    ₦ NGN*/}
+                    {/*</button>*/}
                     <button
                         type="button"
                         onClick={() => setCurrency('USD')}
@@ -156,14 +156,14 @@ export default function DonationForm() {
                         currency === "NGN"
                             ? [
                                 { id: "Paystack", label: "Paystack", desc: "Card / Bank – NGN" },
-                                { id: "CashApp", label: "Cash App", desc: "Instant mobile transfer" },
-                                { id: "Bank Transfer", label: "Bank Transfer", desc: "Manual confirmation" },
+                                // { id: "CashApp", label: "Cash App", desc: "Instant mobile transfer" },
+                                // { id: "Bank Transfer", label: "Bank Transfer", desc: "Manual confirmation" },
                             ]
                             : [
                                 { id: "PayPal", label: "PayPal", desc: "Pay securely in USD" },
-                                { id: "Paystack", label: "Paystack", desc: "Intl. card – USD" },
-                                { id: "CashApp", label: "Cash App", desc: "Mobile transfer" },
-                                { id: "Bank Transfer", label: "Bank Transfer", desc: "Manual confirmation" },
+                                // { id: "Paystack", label: "Paystack", desc: "Intl. card – USD" },
+                                // { id: "CashApp", label: "Cash App", desc: "Mobile transfer" },
+                                // { id: "Bank Transfer", label: "Bank Transfer", desc: "Manual confirmation" },
                             ]
                     ).map((method) => (
                         <label
