@@ -75,8 +75,10 @@ export interface ContactData {
         phone1: string;
         phone2: string;
         email: string;
-        twitter: string;
-        linkedin: string;
+        twitter?: string;
+        linkedin?: string;
+        facebook?: string;     // ← NEW
+        instagram?: string;    // ← NEW
         openDays: OpenDay[];
         charity: string;
     };

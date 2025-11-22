@@ -46,14 +46,23 @@ export default defineType({
                     name: 'twitter',
                     title: 'Twitter URL',
                     type: 'url',
-                    validation: (Rule) => Rule.required(),
                 }),
                 defineField({
                     name: 'linkedin',
                     title: 'LinkedIn URL',
                     type: 'url',
-                    validation: (Rule) => Rule.required(),
                 }),
+                defineField({
+                    name: 'facebook',
+                    title: 'Facebook URL',
+                    type: 'url',
+                }),
+                defineField({
+                    name: 'instagram',
+                    title: 'Instagram URL',
+                    type: 'url',
+                }),
+
                 defineField({
                     name: 'openDays',
                     title: 'Open Days',

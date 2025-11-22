@@ -1,5 +1,5 @@
 //app/(components)/adminComponents/Contact/modals/EditGeneralInfoModal.tsx
-
+// app/(components)/adminComponents/Contact/modals/EditGeneralInfoModal.tsx
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -26,6 +26,8 @@ export default function EditGeneralInfoModal({
         email: '',
         twitter: '',
         linkedin: '',
+        facebook: '',     // ← NEW
+        instagram: '',    // ← NEW
         openDays: [] as { day: string; time: string }[],
         charity: '',
     });
@@ -41,6 +43,8 @@ export default function EditGeneralInfoModal({
                 email: initialData.email || '',
                 twitter: initialData.twitter || '',
                 linkedin: initialData.linkedin || '',
+                facebook: initialData.facebook || '',     // ← NEW
+                instagram: initialData.instagram || '',   // ← NEW
                 openDays: initialData.openDays || [],
                 charity: initialData.charity || '',
             });
@@ -150,7 +154,24 @@ export default function EditGeneralInfoModal({
                             type="url"
                             value={formData.linkedin}
                             onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                            placeholder="https://linkedin.com/in/yourprofile"
+                            placeholder="https://linkedin.com/company/yourorg"
+                            disabled={loading}
+                        />
+                        {/* NEW FIELDS */}
+                        <LabeledInput
+                            label="Facebook"
+                            type="url"
+                            value={formData.facebook}
+                            onChange={(e) => setFormData({ ...formData, facebook: e.target.value })}
+                            placeholder="https://facebook.com/yourpage"
+                            disabled={loading}
+                        />
+                        <LabeledInput
+                            label="Instagram"
+                            type="url"
+                            value={formData.instagram}
+                            onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
+                            placeholder="https://instagram.com/yourhandle"
                             disabled={loading}
                         />
                     </div>
@@ -163,7 +184,7 @@ export default function EditGeneralInfoModal({
                         type="text"
                         value={formData.charity}
                         onChange={(e) => setFormData({ ...formData, charity: e.target.value })}
-                        placeholder="E.g. Hope Foundation"
+                        placeholder="E.g. Dr. Obe Charity Foundation"
                         disabled={loading}
                     />
                 </Section>
@@ -188,13 +209,9 @@ export default function EditGeneralInfoModal({
                                         className="w-full p-2.5 border rounded-lg dark:border-gray-600 focus:ring-2 focus:ring-cyan-500"
                                         disabled={loading}
                                     >
-                                        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(
-                                            (d) => (
-                                                <option key={d} value={d}>
-                                                    {d}
-                                                </option>
-                                            )
-                                        )}
+                                        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((d) => (
+                                            <option key={d} value={d}>{d}</option>
+                                        ))}
                                     </select>
                                 </div>
 
@@ -252,7 +269,7 @@ export default function EditGeneralInfoModal({
     );
 }
 
-/* 🔹 Reusable section wrapper with title and accent */
+/* Reusable components (unchanged) */
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
     return (
         <section className="bg-gray-50/70 dark:bg-gray-900/40 p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
@@ -269,7 +286,6 @@ function Label({ children }: { children: React.ReactNode }) {
     return <label className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1 block">{children}</label>;
 }
 
-/* 🔹 Reusable labeled input */
 function LabeledInput({
                           label,
                           type,

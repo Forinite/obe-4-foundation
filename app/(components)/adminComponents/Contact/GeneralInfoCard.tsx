@@ -3,7 +3,18 @@
 'use client';
 
 import React from 'react';
-import { Edit, Trash2, Phone, Mail, Twitter, Linkedin, HeartHandshake, CalendarDays } from 'lucide-react';
+import {
+    Edit,
+    Trash2,
+    Phone,
+    Mail,
+    Twitter,
+    Linkedin,
+    HeartHandshake,
+    CalendarDays,
+    Facebook,
+    Instagram
+} from 'lucide-react';
 
 interface GeneralInfoCardProps {
     data: {
@@ -14,6 +25,8 @@ interface GeneralInfoCardProps {
         email: string;
         twitter: string;
         linkedin: string;
+        facebook: string;
+        instagram: string;
         openDays: { day: string; time: string }[];
         charity: string;
     };
@@ -28,9 +41,10 @@ export default function GeneralInfoCard({ data, onEdit }: GeneralInfoCardProps) 
         { icon: <Mail className="w-6 h-6" />, label: 'Email', value: data.email, color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400' },
         { icon: <Twitter className="w-6 h-6" />, label: 'Twitter', value: data.twitter, color: 'bg-sky-500/10 text-sky-600 dark:text-sky-400' },
         { icon: <Linkedin className="w-6 h-6" />, label: 'LinkedIn', value: data.linkedin, color: 'bg-blue-500/10 text-blue-600 dark:text-blue-400' },
+        { icon: <Facebook className="w-6 h-6" />, label: 'Facebook', value: data.facebook, color: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400' },
+        { icon: <Instagram className="w-6 h-6" />, label: 'Instagram', value: data.instagram, color: 'bg-pink-500/10 text-pink-600 dark:text-pink-400' },
         { icon: <HeartHandshake className="w-6 h-6" />, label: 'Charity', value: data.charity, color: 'bg-pink-500/10 text-pink-600 dark:text-pink-400' },
-    ];
-
+    ].filter(Boolean); // Remove undefined
     return (
         <div className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700">
             <div className="flex items-center justify-between mb-5">
