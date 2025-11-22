@@ -23,10 +23,10 @@ interface GeneralInfoCardProps {
         phone1: string;
         phone2: string;
         email: string;
-        twitter: string;
-        linkedin: string;
-        facebook: string;
-        instagram: string;
+        twitter?: string;
+        linkedin?: string;
+        facebook?: string;
+        instagram?: string;
         openDays: { day: string; time: string }[];
         charity: string;
     };
