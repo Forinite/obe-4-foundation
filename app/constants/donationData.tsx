@@ -84,8 +84,8 @@ export const accountCards = [
         position: 'lg:left-0',
     },
     {
-        bankName: 'Bank of America',
-        accountName: 'Dr. Obe Charity Foundation',
+        bankName: 'Bank of America (Zelle)',
+        accountName: 'Obe Charity Foundation',
         accountNumber: '9159992005',
         gradient: 'from-blue-500 via-gray-200 to-blue-600',
         textColor: 'text-blue-600',
@@ -93,7 +93,7 @@ export const accountCards = [
     },
     {
         bankName: 'PayPal',
-        accountName: 'Dr. Obe Charity Foundation',
+        accountName: 'Obe Charity Foundation',
         accountNumber: '@obecharity',
         gradient: 'from-blue-800 via-gray-200 to-blue-900',
         textColor: 'text-blue-900',
@@ -101,7 +101,7 @@ export const accountCards = [
     },
     {
         bankName: 'CashApp',
-        accountName: 'Dr. Obe Charity Foundation',
+        accountName: 'Obe Charity Foundation',
         accountNumber: '@obecharityfoundation',
         gradient: 'from-orange-500 via-gray-200 to-orange-900',
         textColor: 'text-orange-600',
