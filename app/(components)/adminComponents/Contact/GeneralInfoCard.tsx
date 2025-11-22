@@ -39,10 +39,10 @@ export default function GeneralInfoCard({ data, onEdit }: GeneralInfoCardProps) 
         { icon: <Phone className="w-6 h-6" />, label: 'Phone1', value: data.phone1, color: 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400' },
         { icon: <Phone className="w-6 h-6" />, label: 'Phone2', value: data.phone2, color: 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400' },
         { icon: <Mail className="w-6 h-6" />, label: 'Email', value: data.email, color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400' },
-        { icon: <Twitter className="w-6 h-6" />, label: 'Twitter', value: data.twitter || '#', color: 'bg-sky-500/10 text-sky-600 dark:text-sky-400' },
-        { icon: <Linkedin className="w-6 h-6" />, label: 'LinkedIn', value: data.linkedin || '#', color: 'bg-blue-500/10 text-blue-600 dark:text-blue-400' },
-        { icon: <Facebook className="w-6 h-6" />, label: 'Facebook', value: data.facebook || '#', color: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400' },
-        { icon: <Instagram className="w-6 h-6" />, label: 'Instagram', value: data.instagram || '#', color: 'bg-pink-500/10 text-pink-600 dark:text-pink-400' },
+        data.twitter && { icon: <Twitter className="w-6 h-6" />, label: 'Twitter', value: data.twitter || '#', color: 'bg-sky-500/10 text-sky-600 dark:text-sky-400' },
+        data.linkedin && { icon: <Linkedin className="w-6 h-6" />, label: 'LinkedIn', value: data.linkedin || '#', color: 'bg-blue-500/10 text-blue-600 dark:text-blue-400' },
+        data.facebook && { icon: <Facebook className="w-6 h-6" />, label: 'Facebook', value: data.facebook || '#', color: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400' },
+        data.instagram && { icon: <Instagram className="w-6 h-6" />, label: 'Instagram', value: data.instagram || '#', color: 'bg-pink-500/10 text-pink-600 dark:text-pink-400' },
         { icon: <HeartHandshake className="w-6 h-6" />, label: 'Charity', value: data.charity, color: 'bg-pink-500/10 text-pink-600 dark:text-pink-400' },
     ].filter(Boolean); // Remove undefined
     return (
