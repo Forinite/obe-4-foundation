@@ -61,10 +61,11 @@ export async function getContactData(): Promise<ContactData> {
 
 export async function getGalleryImages(): Promise<GalleryImage[]> {
     return client.fetch(`
-    *[_type == "galleryImage"] {
+    *[_type == "galleryImage"] | order(_createdAt desc) {
       _id,
       _type,
-      image
+      image,
+      caption
     }
   `);
 }

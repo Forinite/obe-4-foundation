@@ -4,10 +4,13 @@
 import { revalidatePath } from 'next/cache';
 import { client } from '@/lib/sanity';
 
-export async function addGalleryImages(files: File[]) {
+export async function addGalleryImages(files: File[], captions: string[] = []) {
     if (!files || files.length === 0) return;
 
-    for (const file of files) {
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const caption = captions[i]?.trim() || undefined;
+
         const assetType = file.type.startsWith('image/') ? 'image' : 'file';
 
         const asset = await client.assets.upload(assetType, file, {
@@ -24,6 +27,7 @@ export async function addGalleryImages(files: File[]) {
                     _type: 'reference',
                 },
             },
+            caption, // ← NEW
         });
     }
 
@@ -32,6 +36,16 @@ export async function addGalleryImages(files: File[]) {
 
 export async function deleteGalleryImage(imageId: string) {
     await client.delete(imageId);
+    revalidatePath('/admin/dashboard/gallery');
+}
+
+// Update
+export async function updateGalleryImageCaption(imageId: string, caption: string | null) {
+    await client
+        .patch(imageId)
+        .set({ caption })
+        .commit();
+
     revalidatePath('/admin/dashboard/gallery');
 }
 

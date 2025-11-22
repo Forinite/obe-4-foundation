@@ -1,4 +1,5 @@
 // app/subcomponents/AboutComponents/GalleryClient.tsx
+// app/subcomponents/AboutComponents/GalleryClient.tsx
 'use client';
 
 import Image from 'next/image';
@@ -34,16 +35,13 @@ export default function GalleryClient({ images }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Open modal
     const openModal = (index: number) => {
         setCurrentIndex(index);
         setIsOpen(true);
     };
 
-    // Close modal
     const closeModal = () => setIsOpen(false);
 
-    // Next / Prev
     const next = useCallback(() => {
         setCurrentIndex((prev) => (prev + 1) % images.length);
     }, [images.length]);
@@ -52,19 +50,51 @@ export default function GalleryClient({ images }: Props) {
         setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
     }, [images.length]);
 
-    // Keyboard navigation
     useEffect(() => {
         if (!isOpen) return;
-
         const handleKey = (e: KeyboardEvent) => {
             if (e.key === 'ArrowRight') next();
             if (e.key === 'ArrowLeft') prev();
             if (e.key === 'Escape') closeModal();
         };
-
         window.addEventListener('keydown', handleKey);
         return () => window.removeEventListener('keydown', handleKey);
     }, [isOpen, next, prev]);
+
+    // Lock body scroll when modal is open
+    useEffect(() => {
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
+
+
+    const currentImage = images[currentIndex];
+
+    // --- Swipe Navigation ---
+    const [touchStartX, setTouchStartX] = useState(0);
+    const [touchEndX, setTouchEndX] = useState(0);
+
+    const minSwipeDistance = 60; // minimum movement required
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchStartX(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        setTouchEndX(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        const distance = touchStartX - touchEndX;
+
+        if (Math.abs(distance) < minSwipeDistance) return;
+
+        if (distance > 0) next();      // swipe left → next
+        else prev();                   // swipe right → previous
+    };
+
 
     return (
         <section className="relative py-20 px-6 sm:px-8 md:px-10 overflow-hidden">
@@ -111,14 +141,24 @@ export default function GalleryClient({ images }: Props) {
                                                     <div className="transition-transform duration-500 group-hover:rotate-[-3deg] group-hover:scale-[1.05]">
                                                         <Image
                                                             src={urlFor(image.image).url()}
-                                                            alt="gallery tile"
+                                                            alt={image.caption || 'Gallery image'}
                                                             width={970}
                                                             height={700}
                                                             className="aspect-[970/700] rounded-xl object-cover shadow-lg ring-1 ring-gray-200 hover:ring-pink-300/50 transition-all"
                                                             loading="lazy"
                                                         />
                                                         <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-pink-100/40 via-transparent to-sky-100/30" />
+                                                        {/* CAPTION — Only if exists */}
+                                                        {image.caption && (
+                                                            <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 via-black/30 to-transparent rounded-b-xl">
+                                                                <p className="text-white text-xs sm:text-sm font-medium leading-tight line-clamp-2">
+                                                                    {image.caption}
+                                                                </p>
+                                                            </div>
+                                                        )}
                                                     </div>
+
+
                                                 </div>
                                             );
                                         })}
@@ -130,71 +170,89 @@ export default function GalleryClient({ images }: Props) {
                 </div>
             </div>
 
-            {/* ======================= */}
-            {/*        MODAL VIEWER     */}
-            {/* ======================= */}
-            {isOpen && (
-                <div className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
-                    {/* Close Button */}
+            {/* MODAL VIEWER — Now with caption */}
+            {isOpen && currentImage && (
+                <div
+                    className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-xl flex items-center justify-center p-0 sm:p-6"
+                    // onTouchStart={onTouchStart}
+                    // onTouchMove={onTouchMove}
+                    // onTouchEnd={onTouchEnd}
+                >
+                {/* Close */}
                     <button
                         onClick={closeModal}
-                        className="absolute top-6 right-6 text-white hover:text-pink-300 transition"
+                        className="absolute top-5 right-5 text-white/85 hover:text-white transition z-30"
                     >
-                        <X size={32} />
+                        <X size={36} />
                     </button>
 
-                    {/* Prev Button */}
-                    <button
-                        onClick={prev}
-                        className="absolute left-4 sm:left-10 text-white hover:text-pink-300 transition"
-                    >
-                        <ChevronLeft size={48} />
-                    </button>
+                    {/* IMAGE COUNTER */}
+                    <div className="absolute top-5 left-1/2 -translate-x-1/2 text-white/90 text-sm sm:text-base font-medium z-30">
+                        {currentIndex + 1} / {images.length}
+                    </div>
 
-                    {/* NEXT Button */}
-                    <button
-                        onClick={next}
-                        className="absolute right-4 sm:right-10 text-white hover:text-pink-300 transition"
-                    >
-                        <ChevronRight size={48} />
-                    </button>
+                    {/* Navigation */}
+                    <div className={"block"}>
+                        <button
+                            onClick={prev}
+                            className="absolute left-3 sm:left-10 text-white/70 hover:text-white transition z-30"
+                        >
+                            <ChevronLeft size={48} />
+                        </button>
 
-                    {/* MAIN IMAGE */}
-                    <div className="max-w-5xl max-h-[90vh] animate-zoomIn">
-                        <Image
-                            src={urlFor(images[currentIndex].image).url()}
-                            alt="large preview"
-                            width={1800}
-                            height={1200}
-                            className="w-full h-auto rounded-2xl shadow-2xl"
-                        />
+                        <button
+                            onClick={next}
+                            className="absolute right-3 sm:right-10 text-white/70 hover:text-white transition z-30"
+                        >
+                            <ChevronRight size={48} />
+                        </button>
+                    </div>
+
+
+
+                    {/* MODAL CONTENT — WhatsApp style */}
+                    <div className="flex flex-col w-full max-w-[900px] h-full py-8 px-4 sm:px-0 items-center">
+
+
+                        {/* IMAGE (full height minus caption area) */}
+                        <div className="flex-1 w-full flex items-center justify-center overflow-hidden">
+
+                            <Image
+                                src={urlFor(currentImage.image).width(1800).height(1200).url()}
+                                alt={currentImage.caption || 'Gallery image'}
+                                width={1800}
+                                height={1200}
+                                className="max-h-[80vh] w-auto h-auto object-contain rounded-lg shadow-2xl animate-zoomIn"
+                                priority
+                            />
+                        </div>
+
+                        {/* CAPTION — WhatsApp style */}
+                        {currentImage.caption && (
+                            <div className="w-full absolute bottom-10 max-w-[800px] mt-4 px-4">
+                                <div className=" bg-white/10  text-white/95 py-3 px-4 rounded-2xl backdrop-blur-md lg:bg-black lg:border lg:border-white lg:rounded-[0px] shadow-lg max-h-[25vh] overflow-y-auto text-center text-sm sm:text-base leading-relaxed ">
+                                    {currentImage.caption}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
 
-            {/* Modal Animations */}
-            <style>{`
-                .animate-fadeIn {
-                    animation: fadeIn .25s ease-out forwards;
-                }
-                @keyframes fadeIn {
-                    from { opacity: 0 }
-                    to { opacity: 1 }
-                }
 
-                .animate-zoomIn {
-                    animation: zoomIn .25s ease-out forwards;
+
+            {/* Animations */}
+            <style jsx>{`
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
                 }
                 @keyframes zoomIn {
-                    from { 
-                        transform: scale(.8); 
-                        opacity: 0; 
-                    }
-                    to { 
-                        transform: scale(1); 
-                        opacity: 1; 
-                    }
+                    from { transform: scale(0.9); opacity: 0; }
+                    to { transform: scale(1); opacity: 1; }
                 }
+                .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
+                .animate-zoomIn { animation: zoomIn 0.4s ease-out; }
             `}</style>
         </section>
     );

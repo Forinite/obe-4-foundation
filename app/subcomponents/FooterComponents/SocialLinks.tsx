@@ -1,9 +1,11 @@
 //app/subcomponents/FooterComponents/SocialLinks.tsx
-import { LinkedinIcon, TwitterIcon } from "lucide-react";
+import {FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon} from "lucide-react";
 
 const socialLinks = [
     { href: "https://twitter.com", label: "Twitter", icon: TwitterIcon },
     { href: "https://linkedin.com", label: "LinkedIn", icon: LinkedinIcon },
+    { href: "https://facebook.com", label: "FaceBook", icon: FacebookIcon},
+    { href: "https://Instagram.com", label: "Instagram", icon: InstagramIcon},
 ];
 
 const SocialLinks: React.FC = () => {

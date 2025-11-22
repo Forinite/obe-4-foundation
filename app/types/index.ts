@@ -96,8 +96,8 @@ export interface GalleryImage {
             _type: 'reference';
         };
     };
+    caption?: string;  // ← NEW
 }
-
 export interface FooterData {
     _id: string;
     _type: 'footer';
